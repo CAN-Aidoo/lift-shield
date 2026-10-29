@@ -174,3 +174,6 @@ the current step, which adds a*dt (about 8 mm/s at E7's peak acceleration) to th
 of the frozen rig and is kept for every other result; in the reference configuration it never caused a switch during a
 shielded lift (0 of 2,560). Diagnostic rows E7L and E9L repeat E7 and E9 with the lag removed (palm velocity from the same
 step as the rod velocity). They are reported next to E7 and E9, not instead of them.
+- Added 29 Oct 2026 after seeing E7L (0 shielded failures): row R0L repeats the reference configuration with the lag
+  removed, to measure how much of the main-study results depend on the lag. Reported as a diagnostic next to the main
+  results; the main results stay as registered.

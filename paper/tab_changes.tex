@@ -1,0 +1,29 @@
+\begin{table}[h]\centering\small
+\caption{\textbf{Controlled changes.} Each row modifies a single design choice relative to the reference configuration
+(test set: 40 objects, $r\in\{1.0,1.1,1.2,1.3\}$, $r_{\max}=1.2$, tolerance 5\,mm, margin 1.5\,mm, probe step 0.9,
+slip-monitor noise 0.5\,mm, weight error $\pm10$\%, lift height 10\,cm, pad stiffness solref 0.003, kinetic switch at
+2\,cm/s, training on $r\in[1,1.2]$ for 20 iterations with $\lambda=1$). Rows E7L and E9L are diagnostics added after E7
+and E9 were seen (Addendum A6).}\label{tab:changes}
+\begin{tabular}{@{}lllc@{}}\toprule
+Row & Change & What is modified & Retrained\\\midrule
+\multicolumn{4}{@{}l}{\textit{Environment and sensing}}\\
+E1 & heavier objects & $m\sim U[0.2,0.5]$\,kg (reference $U[0.05,0.2]$) & no\\
+E2 & slippery objects & $\mu_s\sim U[0.2,0.4]$ (reference $U[0.4,0.8]$) & no\\
+E3 & noisy slip monitor & noise 1.5\,mm (reference 0.5\,mm) & no\\
+E4 & poor weight estimate & error $\pm25$\% (reference $\pm10$\%) & no\\
+E5 & coarser probe & grip step $\times0.8$ (reference $\times0.9$) & no\\
+E6 & finer probe & grip step $\times0.95$ & no\\
+E7 & higher lift & $H=20$\,cm (reference 10\,cm) & no\\
+E8 & softer pads & contact time constant 6\,ms (reference 3\,ms) & no\\
+E9 & earlier kinetic switch & switch at 5\,mm/s (reference 2\,cm/s) & no\\
+E7L, E9L & diagnostics & E7, E9 with the one-step lag removed from the switch & no\\
+\multicolumn{4}{@{}l}{\textit{Shield settings}}\\
+S1, S2, S3 & assumed drop & $r_{\max}=1.0$, 1.1, 1.4 (reference 1.2) & no\\
+S4, S5 & slip tolerance & 2\,mm, 10\,mm (reference 5\,mm) & no\\
+S6 & no margin & sensing margin 0 (reference 1.5\,mm) & no\\
+\multicolumn{4}{@{}l}{\textit{Training}}\\
+T1 & no friction drop in training & train on $r=1$ only & B2, B5\\
+T2 & wider duration action & $T=T_0e^{1.5a_T}$ (reaches 0.25\,s) & B2, B5\\
+T3 & grip-heavy reward & $\lambda=10$ & B2, B5\\
+T4 & longer training & 40 iterations (3{,}120 episodes) & B2, B5\\\bottomrule
+\end{tabular}\end{table}

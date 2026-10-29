@@ -22,6 +22,7 @@ ROWS = {  # row: (description, module overrides, xml replacements, weight tag)
     "S4": ("slip tolerance 2 mm", dict(S_TOL=0.002), {}, ""),
     "S5": ("slip tolerance 10 mm", dict(S_TOL=0.010), {}, ""),
     "S6": ("no sensing margin", dict(MARGIN=0.0), {}, ""),
+    "R0L": ("reference, lag-free switch", dict(LAGFIX=True), {}, ""),
     "E7L": ("lift height 20 cm, lag-free switch", dict(H=0.20, LAGFIX=True), {}, ""),
     "E9L": ("switch 5 mm/s, lag-free switch", dict(V_SLIP=0.005, LAGFIX=True), {}, ""),
     "T1": ("trained on r = 1.0 only", {}, {}, "_T1"),

@@ -210,6 +210,59 @@ def e7case():
     fig.tight_layout(pad=0.3); fig.savefig("paper/fig_e7case.pdf"); plt.close(fig)
 
 
+def safetymap():
+    d = pd.read_csv("results/extended/safetymap.csv"); d["fail"] = d.ok.astype(str) != "True"
+    aT = np.sort(d.aT.unique()); aF = np.sort(d.aF.unique())
+    t = pd.read_csv("results/test.csv"); b2 = t[(t.method == "B2") & (t.r_max == 1.2)]
+    from lift_env import model_grip
+    pts = []
+    for s_ in range(5):
+        g = b2[b2.seed == s_]; aTm = np.log(g["T"] / T0).mean() / L.ST
+        aFm = (np.log(g.F / np.array([model_grip(a, b) for a, b in zip(g.F_stuck, g["T"])])) / L.SF).mean(); pts.append((aTm, aFm))
+    panels = [("(a) no shield, $r=1.0$", False, 1.0, "fail"), ("(b) no shield, $r=1.2$", False, 1.2, "fail"),
+              ("(c) grip shield, $r=1.2$", True, 1.2, "fail"), ("(d) grip after shield, $r=1.2$", True, 1.2, "F_rel")]
+    fig, ax = plt.subplots(1, 4, figsize=(7.16, 2.05))
+    for k, (title, sh, r, col) in enumerate(panels):
+        g = d[(d.shield == sh) & (d.r == r)]
+        M = g.pivot_table(index="aF", columns="aT", values=col, aggfunc="mean").loc[aF[::-1], aT].values
+        if col == "fail":
+            im = ax[k].imshow(100 * M, cmap="Reds", vmin=0, vmax=100, aspect="auto")
+            for i in range(M.shape[0]):
+                for j in range(M.shape[1]):
+                    v = 100 * M[i, j]; ax[k].text(j, i, f"{v:.0f}", ha="center", va="center", fontsize=4.6, color="white" if v > 55 else "black")
+        else:
+            im = ax[k].imshow(M, cmap="Blues", aspect="auto")
+            for i in range(M.shape[0]):
+                for j in range(M.shape[1]):
+                    ax[k].text(j, i, f"{M[i,j]:.2f}", ha="center", va="center", fontsize=3.9, color="white" if M[i, j] > np.nanmedian(M) * 1.08 else "black")
+        ax[k].set_xticks(range(len(aT))); ax[k].set_xticklabels([f"{T0*np.exp(L.ST*x):.2f}" for x in aT], fontsize=5, rotation=90)
+        ax[k].set_yticks(range(len(aF))); ax[k].set_yticklabels([f"{np.exp(L.SF*x):.2f}" for x in aF[::-1]] if k == 0 else [], fontsize=5)
+        ax[k].set_xlabel("lift time (s)", fontsize=6); ax[k].set_title(title, fontsize=6.6, loc="left")
+        for (pa, pf) in pts:
+            x = np.interp(pa, aT, range(len(aT))); y = np.interp(-pf, -aF[::-1], range(len(aF)))
+            ax[k].plot(x, y, "o", ms=2.6, mfc="none", mec="#1b4965" if col == "F_rel" else "k", mew=0.7)
+    ax[0].set_ylabel("grip / model grip", fontsize=6)
+    fig.tight_layout(pad=0.3, w_pad=0.5); fig.savefig("paper/fig_safetymap.pdf"); plt.close(fig)
+
+
+def tightness():
+    d = pd.read_csv("results/extended/tightness.csv"); d["held"] = d.held.astype(str) == "True"
+    fig, ax = plt.subplots(1, 3, figsize=(7.1, 2.0))
+    cols = {1.0: "#8fb8de", 1.1: "#2e86ab", 1.2: "#1b4965"}
+    for k, T in enumerate((0.37, 0.5, 1.0)):
+        g = d[d["T"] == T]
+        for r, c in cols.items():
+            h = g[(g.r == r) & g.held]
+            ax[k].scatter((1000 * h.bound).clip(lower=0.01), (1000 * h.slip).clip(lower=0.01), s=4, color=c, alpha=0.6, label=f"$r=r_{{\\max}}={r}$", lw=0)
+        dr = g[~g.held]
+        ax[k].scatter((1000 * dr.bound).clip(lower=0.01), (1000 * dr.slip).clip(lower=0.01), s=5, marker="x", color="0.6", lw=0.5, label="rod dropped")
+        ax[k].plot([0.01, 1e4], [0.01, 1e4], color="0.4", lw=0.6, ls="--")
+        ax[k].set_xscale("log"); ax[k].set_yscale("log"); ax[k].set_xlim(0.008, 2e4); ax[k].set_ylim(0.008, 2e4)
+        ax[k].set_xlabel("bound (mm)"); ax[k].set_title(f"$T={T}$ s", loc="left")
+    ax[0].set_ylabel("measured slip (mm)"); ax[0].legend(frameon=False, fontsize=5.5, loc="upper left", markerscale=2)
+    fig.tight_layout(pad=0.3); fig.savefig("paper/fig_tightness.pdf"); plt.close(fig)
+
+
 if __name__ == "__main__":
     for f in sys.argv[1:]: globals()[f]()
     print("ok")

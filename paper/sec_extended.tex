@@ -48,25 +48,30 @@ failure, but not a gentle one, and Fig.~\ref{fig:ctrl}a shows why failure rates 
 shield itself. Lifting 20\,cm instead of 10\,cm (E7) doubles the peak acceleration for the same duration; B5 then failed
 38.6\% of lifts and B4g 37.8\%, every one with a certified bound of zero. Switching to kinetic friction at 5\,mm/s instead
 of 2\,cm/s (E9) gave 46.9\% for both. Figure~\ref{fig:e7case} shows the mechanism. The shield sets the grip at the edge of
-onset, where the demand reaches 95\% of the true static capacity at peak acceleration. MuJoCo's soft contact lets the rod
-creep relative to the pads at that load, at 12\,mm/s in E7 and 6.5\,mm/s in the reference; once the creep speed exceeds the
-switching threshold, our emulator drops friction to its kinetic level although Coulomb's law says the rod is stuck, and the
-rod slides. In the reference configuration the creep stayed below the 2\,cm/s threshold by a factor of three; E7 and E9
-remove that factor. The time projection was more robust in E7 (4.1\% failures), because a longer lift lowers the peak
+onset, where the demand reaches 95\% of the true static capacity at peak acceleration. At that load MuJoCo's soft contact
+lets the rod creep relative to the pads, at up to 12\,mm/s in E7 (6.5\,mm/s in the reference). Our emulator decides when
+friction drops by comparing the rod's velocity from the previous step with the palm's commanded velocity for the current
+step; this one-step lag adds $a\,\Delta t$, about 8\,mm/s at E7's peak acceleration, to the measured relative speed. Creep
+plus lag crossed the 20\,mm/s threshold, friction dropped although Coulomb's law says the rod was stuck, and the rod slid.
+In the reference configuration the same quantity peaked at 10.8\,mm/s, and no shielded lift ever switched to kinetic
+friction (0 of 2{,}560). The time projection was more robust in E7 (4.1\% failures), because a longer lift lowers the peak
 demand instead of meeting it at the edge.
 
-We do not read this as an artefact to be tuned away. Real contacts also move before they slide: pre-sliding displacement is
-part of every dynamic friction model~\cite{canudas1995,olsson1998}, and whether friction weakens during it is a property of
-the materials. A certificate placed exactly at the onset boundary has no margin for it. \textbf{The practical fix is a
-margin on onset} --- certify $g+a\le(1-\delta)gF/\Fs$ for some $\delta>0$ --- which our zero-margin shield did not have. We
-report this as found rather than adding the fix after seeing the result.
+\input{sec_diag.tex}
+
+Part of this failure is therefore an artefact of our emulator, but the underlying exposure is real. Real contacts move
+before they slide: pre-sliding displacement is part of every dynamic friction model~\cite{canudas1995,olsson1998}, and
+whether friction weakens during it depends on the materials. A certificate placed exactly at the onset boundary has no
+margin for this. \textbf{The practical fix is a margin on onset}, certifying $g+a\le(1-\delta)\,gF/\Fs$ for some
+$\delta>0$, which our zero-margin shield did not have. We report this as found rather than adding the fix after seeing
+the result.
 
 \begin{figure*}[t]\centering
 \includegraphics[width=\textwidth]{fig_e7case.pdf}
 \caption{\textbf{When the certificate fails} (row E7, lift height 20\,cm, B5, $r=1.2$). (a) The demand peaks at 95\% of the
 true static capacity, just below the certified level, so Coulomb friction should hold the rod. (b) The soft contact creeps
-at up to 12\,mm/s before peak acceleration; the emulator's kinetic switch fires once the relative speed exceeds 20\,mm/s
-(shaded), and the rod slides. (c) The certified lift ends 6\,mm low.}\label{fig:e7case}
+at up to 12\,mm/s before peak acceleration; the emulator's kinetic switch, which reads the relative speed with a one-step
+lag that adds about 8\,mm/s here, fires at a true relative speed of 12\,mm/s (kinetic friction shaded), and the rod slides. (c) The certified lift ends 6\,mm low.}\label{fig:e7case}
 \end{figure*}
 
 \input{sec_extended_train.tex}

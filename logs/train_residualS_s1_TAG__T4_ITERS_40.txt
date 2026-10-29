@@ -32,3 +32,9 @@ residualS 1 30 -0.504 -0.504 328
 residualS 1 31 -0.487 -0.487 340
 residualS 1 32 -0.505 -0.505 350
 residualS 1 33 -0.512 -0.512 360
+residualS 1 34 -0.486 -0.486 372
+residualS 1 35 -0.512 -0.512 385
+residualS 1 36 -0.508 -0.508 403
+residualS 1 37 -0.493 -0.493 420
+residualS 1 38 -0.486 -0.486 435
+residualS 1 39 -0.481 -0.481 455

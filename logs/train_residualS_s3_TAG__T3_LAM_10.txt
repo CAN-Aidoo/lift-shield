@@ -9,3 +9,12 @@ residualS 3 7 -1.578 -1.585 97
 residualS 3 8 -1.621 -1.622 108
 residualS 3 9 -1.555 -1.557 119
 residualS 3 10 -1.647 -1.649 131
+residualS 3 11 -1.713 -1.713 143
+residualS 3 12 -1.739 -1.739 157
+residualS 3 13 -1.56 -1.561 176
+residualS 3 14 -1.576 -1.577 192
+residualS 3 15 -1.699 -1.7 209
+residualS 3 16 -1.657 -1.658 226
+residualS 3 17 -1.492 -1.493 246
+residualS 3 18 -1.603 -1.608 263
+residualS 3 19 -1.613 -1.615 279
