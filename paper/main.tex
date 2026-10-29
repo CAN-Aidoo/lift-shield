@@ -37,6 +37,7 @@
   attach boxed title to top left={xshift=4mm,yshift=-2mm},boxed title style={colback=white,colframe=boxframe,boxrule=0.5pt,arc=2mm},
   coltitle=black,fonttitle=\small,title={#1}}
 \setlist{nosep,leftmargin=1.1em}
+\renewcommand{\dbltopfraction}{0.95}\renewcommand{\dblfloatpagefraction}{0.75}\renewcommand{\topfraction}{0.9}\renewcommand{\textfraction}{0.08}\setcounter{dbltopnumber}{3}
 
 \title{\Large\bfseries Is a Little Slip Worth It?\\ Certified Fast Lifting for Learned Grasp Policies\\ Under a Static-to-Kinetic Friction Drop}
 \author{Clement Aidoo\\[2pt] \small CANLABS, Accra, Ghana \quad \texttt{clement.aidoo@canlabs.org}\\[3pt]
@@ -61,7 +62,6 @@ controller but grips harder. (d) Letting the shield allow some slip saves grip o
 \input{sec_results.tex}
 \input{sec_end.tex}
 
-\clearpage
 {\footnotesize\input{refs.tex}}
 
 \onecolumn

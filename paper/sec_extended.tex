@@ -1,6 +1,6 @@
 \section{Extended Study: What Survives When the Setup Changes?}\label{sec:extended}
 The confirmatory study answers \Q1--\Q4 for one configuration. A reader building on it needs to know which conclusions
-depend on our choices. We therefore ran a controlled study (Fig.~\ref{fig:overview}): starting from the test-set
+depend on our choices. We therefore ran a controlled study (overview in Fig.~\ref{fig:overview}, Appendix~\ref{app:ext}): starting from the test-set
 configuration, each of 19 rows changes \emph{one} design choice and reruns all six methods on the same 40 objects, four
 values of $r$ and the same episode seeds; four rows retrain the residuals. Four diagnostic rows (R0L, E7L, E9L, T2L) were
 added after some results were seen, each frozen before it was run. Figure~\ref{fig:ctrl} reports the change in
@@ -9,21 +9,9 @@ interval excludes zero (an unpaired bootstrap for E1 and E2, which draw differen
 appendix describes each change and Table~\ref{tab:controlled} gives absolute values. The study, and the analyses in
 Sections~\ref{sec:map}--\ref{sec:tight}, were frozen in a protocol addendum before they were run and are exploratory.
 
-\begin{figure*}[t]\centering
-\includegraphics[width=\textwidth]{fig_overview.pdf}
-\caption{\textbf{Controlled study overview.} Each row of Fig.~\ref{fig:ctrl} changes a single design choice relative to the
-reference configuration and reruns every method on the same objects and episode seeds. Rows T1--T4 retrain B2 and B5
-(5 seeds each); all other rows reuse the trained weights.}\label{fig:overview}
-\end{figure*}
 
-\begin{figure*}[t]\centering
-\includegraphics[width=\textwidth]{fig_ctrl_main.pdf}
-\caption{\textbf{Controlled study.} Each cell is the change from the reference configuration (top row, absolute values),
-with the resulting absolute value in parentheses; * marks a 95\% bootstrap interval that excludes zero. Red is worse
-(more failures, more grip, longer episodes). Failures count lifts that slip more than the row's tolerance or drop the rod,
-over 160 lifts (B0, B0S) or 800 lifts (learned methods, 5 seeds). Blocks, top to bottom: environment and sensing (E),
-shield settings (S), training (T), and diagnostics with the emulator's one-step lag removed (rows ending in L).}\label{fig:ctrl}
-\end{figure*}
+
+
 
 \subsection{Findings that hold}
 \finding{The unshielded residual is fragile, and the shield fixes it.} B2's failure rate moved with almost every change:
@@ -68,12 +56,6 @@ model~\cite{canudas1995,olsson1998}, and whether friction weakens during it depe
 fix is a margin on onset}, certifying $g+a\le(1-\delta)\,gF/\Fs$ for some $\delta>0$, which our zero-margin shield did not
 have. We report this as found rather than adding the fix after seeing the result.
 
-\begin{figure*}[t]\centering
-\includegraphics[width=\textwidth]{fig_e7case.pdf}
-\caption{\textbf{When the certificate fails} (row E7, lift height 20\,cm, B5, $r=1.2$). (a) The demand peaks at 95\% of the
-true static capacity, just below the certified level, so Coulomb friction should hold the rod. (b) The soft contact creeps
-at up to 12\,mm/s before peak acceleration; the emulator's kinetic switch, which reads the relative speed with a one-step
-lag that adds about 8\,mm/s here, fires at a true relative speed of 12\,mm/s (kinetic friction shaded), and the rod slides. (c) The certified lift ends 6\,mm low.}\label{fig:e7case}
-\end{figure*}
+
 
 \input{sec_extended_train.tex}

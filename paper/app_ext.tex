@@ -6,6 +6,13 @@ changed ranges), the same four values of $r$ and the same episode seeds as the r
 Fig.~\ref{fig:ctrl} uses a bootstrap over objects of the per-object means (10{,}000 resamples), paired for every row except
 E1 and E2. Table~\ref{tab:controlled} gives absolute values; Fig.~\ref{fig:ctrltime} adds the change in lift time.
 
+\begin{figure}[!htbp]\centering
+\includegraphics[width=\textwidth]{fig_overview.pdf}
+\caption{\textbf{Controlled study overview.} Each row of Fig.~\ref{fig:ctrl} changes a single design choice relative to the
+reference configuration and reruns every method on the same objects and episode seeds. Rows T1--T4 retrain B2 and B5
+(5 seeds each); all other rows reuse the trained weights.}\label{fig:overview}
+\end{figure}
+
 \input{tab_changes.tex}
 
 \input{tab_controlled.tex}
