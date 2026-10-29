@@ -104,4 +104,11 @@ Training: antithetic ES as Paper 5 (6 pairs, 6 objects per iteration, sigma 0.1,
 
 ## Deviations
 
-(none yet)
+- **D1 (29 Oct 2026).** The pre-registered exceedance metric (slip > bound) is dominated by elastic creep: every
+  certified lift had a bound of exactly 0 and measured 0.05-0.49 mm of creep, so "exceedance" is 100% at r_max = 1.2.
+  We report it as registered and add the size of the excess against MARGIN (1.5 mm) and the count of lifts over S_TOL.
+- **D2 (29 Oct 2026).** The confirmation set draws r per object from U[1.0, 1.3], so the per-r tests do not apply; it is
+  analysed pooled over objects with the same tests (`analyze_confirm.py`), plus failures by r band.
+- **D3 (29 Oct 2026, exploratory).** Not pre-registered: how much grip a slip allowance buys as a function of r_max
+  (`explore_allowance.py`). Reported and labelled as exploratory.
+- Naming: the bound called "Proposition 3" in code comments is Proposition 1 in the paper.
