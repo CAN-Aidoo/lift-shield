@@ -97,20 +97,19 @@ the lift later, so even an infinitesimal $\varepsilon$ certifies centimetres of 
 $\varepsilon=0$ unless the allowance $s_{\lim}$ is larger than this jump. Figure~\ref{fig:cliffapp} shows the result for
 three allowances and three lift durations.
 
-\begin{figure}[h]\centering
+\begin{figure}[!htbp]\centering
 \includegraphics[width=0.62\textwidth]{fig_cliff.pdf}
 \caption{\textbf{The cliff.} Left: grip saved by allowing 3.5, 10 or 30\,mm of slip at $T=0.37$\,s, as a function of the assumed
 drop $r_{\max}$. Right: Proposition~\ref{prop:lift}'s bound as a function of grip for three values of $r_{\max}$; with any
 drop, the bound jumps from zero to centimetres as soon as slip can begin.}\label{fig:cliffapp}
 \end{figure}
 
-\begin{table}[h]\centering\small
+\begin{table}[!htbp]\centering\small
 \caption{\textbf{Grip saved by a slip allowance} (\% of the no-onset grip), computed from Proposition~\ref{prop:lift}; the values
 are the same for every object.}\label{tab:allow}
 \input{tab_allow.tex}
 \end{table}
 
-\clearpage
 \section{Simulation Details}\label{app:sim}
 \subsection{Model and parameters}\label{app:model}
 Listing~\ref{lst:xml} is the complete MuJoCo model; \texttt{\{m\}} and \texttt{\{mu\}} are filled per object. The palm body
@@ -126,7 +125,7 @@ regardless of contact forces. Table~\ref{tab:params} lists every parameter.
 \lstinputlisting[style=py]{code_mj1.py}
 \end{codebox}
 
-\begin{table}[h]\centering\small
+\begin{table}[!htbp]\centering\small
 \caption{\textbf{Simulation and task parameters.}}\label{tab:params}
 \begin{tabular}{@{}llll@{}}\toprule
 Parameter & Value & Parameter & Value\\\midrule
@@ -177,14 +176,13 @@ magnitude (panel b): with $\Fs$ above the true breakaway grip and the quasi-stat
 that the bound allows to slip usually does not slip at all. This looseness is one reason the shield ends up forbidding slip
 altogether; Section~\ref{sec:extended} measures it directly.
 
-\begin{figure}[h]\centering
+\begin{figure}[!htbp]\centering
 \includegraphics[width=\textwidth]{fig_validation.pdf}
 \caption{\textbf{Rig validation.} (a) Breakaway grip during a lift relative to the quasi-static prediction (mean and range over
 8 objects). (b) Bound against measured slip in 120 random lifts (log axes; zero bounds drawn at the left edge; 32 dropped
 rods, all with bounds above 0.5\,m, omitted). (c) Elastic creep in well-held lifts.}\label{fig:validation}
 \end{figure}
 
-\clearpage
 \section{Controller, Shield and Training}\label{app:ctrl}
 \subsection{Probe, bound and shield code}\label{app:code}
 The listings below are copied verbatim from \texttt{lift\_env.py} by a script, so they match the code that produced every
@@ -218,7 +216,7 @@ current policy. Rewards are rank-transformed to $[-0.5,0.5]$ and the gradient es
 $\sum_i(\mathrm{rank}^+_i-\mathrm{rank}^-_i)\epsilon_i/(6\sigma)$ is followed with Adam~\cite{salimans2017,kingma2015}.
 Table~\ref{tab:hyper} lists the settings, which are those of our earlier residual papers~\cite{aidoo2026b,aidoo2026c}, unchanged.
 
-\begin{table}[h]\centering\small
+\begin{table}[!htbp]\centering\small
 \caption{\textbf{Training hyperparameters} (identical for B2 and B5).}\label{tab:hyper}
 \begin{tabular}{@{}ll@{\hspace{2em}}ll@{}}\toprule
 antithetic pairs & 6 & objects per iteration & 6\\
@@ -233,7 +231,7 @@ failure reward & $-10$ & success reward & $-T/T_0-\lambda F/(10mg)$, $\lambda=1$
 \lstinputlisting[style=py]{code_train.py}
 \end{codebox}
 
-\begin{figure}[h]\centering
+\begin{figure}[!htbp]\centering
 \includegraphics[width=\textwidth]{fig_training.pdf}
 \caption{\textbf{Training curves.} Reward of the current (unperturbed) policy on each iteration's 6 training objects. Both
 methods improve on the model controller (dotted) within about 600 episodes. The unshielded runs dip whenever an iteration's
@@ -241,7 +239,6 @@ batch contains a lift that slips: three of the five B2 runs ended on such a batc
 to the same reward, about $-0.50$.}\label{fig:training}
 \end{figure}
 
-\clearpage
 \section{Additional Main Results}\label{app:main}
 Tables~\ref{tab:perr}--\ref{tab:perobj} give the complete test-set and confirmation results behind Section~\ref{sec:results}.
 Figure~\ref{fig:gallery} shows every failure of the worst B2 seed.
@@ -252,7 +249,7 @@ Figure~\ref{fig:gallery} shows every failure of the worst B2 seed.
 \input{tab_confirm.tex}
 \input{tab_rmax.tex}
 
-\begin{figure}[h]\centering
+\begin{figure}[!htbp]\centering
 \includegraphics[width=\textwidth]{fig_gallery.pdf}
 \caption{\textbf{Every failure of the worst unshielded seed} (B2 seed 2, $r=1.2$, 14 of 40 test objects): slip against time
 for the model controller (B0), the unshielded residual (B2) and the shield-trained residual (B5, seed 2) on the same object
@@ -261,10 +258,8 @@ and episode seed. All 14 failures share the mechanism of Fig.~\ref{fig:anatomy};
 
 \input{tab_per_object.tex}
 
-\clearpage
 \input{app_ext.tex}
 
-\clearpage
 \section{Protocol, Deviations and Reproducibility}\label{app:protocol}
 \textbf{Timeline.} The repository history records the order of work: (1) rig, validation and the frozen protocol;
 (2) training, test-set evaluation and the analysis code, committed before the confirmation run; (3) the confirmation run,

@@ -53,30 +53,28 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3}Certified Lifting}{2}{section.3}\protected@file@percent }
 \newlabel{sec:method}{{3}{2}{Certified Lifting}{section.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Task}{2}{subsection.3.1}\protected@file@percent }
-\newlabel{eq:stick}{{2}{2}{Task}{equation.3.2}{}}
 \citation{salimans2017}
 \citation{mania2018}
 \citation{kingma2015}
-\citation{todorov2012}
-\citation{aidoo2026a}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Episode pipeline.} A wrist weight estimate and a reactive probe give the breakaway grip $F_{\mathrm  {stuck}}$; the friction-model controller proposes a lift; the residual policy rescales its duration and grip; the shield evaluates Proposition~\ref {prop:lift} and, if the slip bound exceeds 3.5\,mm, raises the grip (grip axis) or lengthens the lift (time axis) until it does not, declining if neither suffices. Then the gripper lifts the object 10\,cm along a minimum-jerk profile and holds for 0.3\,s.}}{3}{figure.caption.1}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:method}{{2}{3}{\textbf {Episode pipeline.} A wrist weight estimate and a reactive probe give the breakaway grip $\Fs $; the friction-model controller proposes a lift; the residual policy rescales its duration and grip; the shield evaluates Proposition~\ref {prop:lift} and, if the slip bound exceeds 3.5\,mm, raises the grip (grip axis) or lengthens the lift (time axis) until it does not, declining if neither suffices. Then the gripper lifts the object 10\,cm along a minimum-jerk profile and holds for 0.3\,s}{figure.caption.1}{}}
+\newlabel{eq:stick}{{2}{3}{Task}{equation.3.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Probing the breakaway grip}{3}{subsection.3.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}The friction-model controller}{3}{subsection.3.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}A slip bound for lifting}{3}{subsection.3.4}\protected@file@percent }
 \newlabel{prop:lift}{{1}{3}{Lift slip bound}{proposition.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.5}The shield}{3}{subsection.3.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.6}The residual policy}{3}{subsection.3.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Simulation Testbed}{3}{section.4}\protected@file@percent }
-\newlabel{sec:testbed}{{4}{3}{Simulation Testbed}{section.4}{}}
+\citation{todorov2012}
+\citation{aidoo2026a}
 \citation{aidoo2026c}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {How Proposition~\ref {prop:lift} works} (minimum-jerk lift, $T=0.37$\,s). (a) At the no-onset grip $F_{\rm  model}(T)$ the demand never exceeds the certified static capacity and the bound is zero. (b) With 3\% less grip, slip may begin near peak acceleration; if friction does not drop ($r_{\max }=1$) the excess is small and short, and the bound is 0.8\,mm. (c) The same grip with a possible 20\% drop: from the moment slip may begin, the certified kinetic capacity is far below the demand for most of the acceleration phase, and the bound jumps to 23\,mm. This cliff is why slip allowances buy little (Section~\ref {sec:q4}).}}{4}{figure.caption.2}\protected@file@percent }
 \newlabel{fig:bound}{{3}{4}{\textbf {How Proposition~\ref {prop:lift} works} (minimum-jerk lift, $T=0.37$\,s). (a) At the no-onset grip $F_{\rm model}(T)$ the demand never exceeds the certified static capacity and the bound is zero. (b) With 3\% less grip, slip may begin near peak acceleration; if friction does not drop ($r_{\max }=1$) the excess is small and short, and the bound is 0.8\,mm. (c) The same grip with a possible 20\% drop: from the moment slip may begin, the certified kinetic capacity is far below the demand for most of the acceleration phase, and the bound jumps to 23\,mm. This cliff is why slip allowances buy little (Section~\ref {sec:q4})}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Simulation Testbed}{4}{section.4}\protected@file@percent }
+\newlabel{sec:testbed}{{4}{4}{Simulation Testbed}{section.4}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Rig validation} (development objects only, run before training).}}{4}{table.caption.4}\protected@file@percent }
 \newlabel{tab:val}{{1}{4}{\textbf {Rig validation} (development objects only, run before training)}{table.caption.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {Methods.}}}{4}{table.caption.5}\protected@file@percent }
-\newlabel{tab:methods}{{2}{4}{\textbf {Methods.}}{table.caption.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Experimental Setup}{4}{section.5}\protected@file@percent }
 \newlabel{sec:setup}{{5}{4}{Experimental Setup}{section.5}{}}
 \citation{wilson1927}
@@ -87,28 +85,49 @@
 \citation{nosek2018}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {One lift, two policies} (test object 2, 72\,g, $\mu _s=0.77$, $r=1.2$; MuJoCo renders replayed from the recorded simulation states, with visual-only finger and palm geometry added). The red mark on the palm sits at the rod's initial top. The unshielded residual (top) grips 9\% below the model's grip for its lift time; the rod breaks away near peak acceleration and ends 21\,mm low. The shield-trained residual (bottom) lifts equally fast with a certified grip; the rod does not move relative to the fingers.}}{5}{figure.caption.3}\protected@file@percent }
 \newlabel{fig:render}{{4}{5}{\textbf {One lift, two policies} (test object 2, 72\,g, $\mu _s=0.77$, $r=1.2$; MuJoCo renders replayed from the recorded simulation states, with visual-only finger and palm geometry added). The red mark on the palm sits at the rod's initial top. The unshielded residual (top) grips 9\% below the model's grip for its lift time; the rod breaks away near peak acceleration and ends 21\,mm low. The shield-trained residual (bottom) lifts equally fast with a certified grip; the rod does not move relative to the fingers}{figure.caption.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {Methods.}}}{5}{table.caption.5}\protected@file@percent }
+\newlabel{tab:methods}{{2}{5}{\textbf {Methods.}}{table.caption.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {Main results, test set} ($r_{\max }=1.2$). Lift time and grip are means over all lifts and do not depend on $r$; failures are lifts with slip $>5$\,mm out of 200 (40 for B0, B0S). No failure was a drop. Full statistics: Table~\ref {tab:perr}.}}{5}{table.caption.6}\protected@file@percent }
+\newlabel{tab:main}{{3}{5}{\textbf {Main results, test set} ($r_{\max }=1.2$). Lift time and grip are means over all lifts and do not depend on $r$; failures are lifts with slip $>5$\,mm out of 200 (40 for B0, B0S). No failure was a drop. Full statistics: Table~\ref {tab:perr}}{table.caption.6}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {6}Results}{5}{section.6}\protected@file@percent }
 \newlabel{sec:results}{{6}{5}{Results}{section.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.1}\textbf  {Q1}: How much faster, and at what grip?}{5}{subsection.6.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {Main results, test set} ($r_{\max }=1.2$). Lift time and grip are means over all lifts and do not depend on $r$; failures are lifts with slip $>5$\,mm out of 200 (40 for B0, B0S). No failure was a drop. Full statistics: Table~\ref {tab:perr}.}}{5}{table.caption.6}\protected@file@percent }
-\newlabel{tab:main}{{3}{5}{\textbf {Main results, test set} ($r_{\max }=1.2$). Lift time and grip are means over all lifts and do not depend on $r$; failures are lifts with slip $>5$\,mm out of 200 (40 for B0, B0S). No failure was a drop. Full statistics: Table~\ref {tab:perr}}{table.caption.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2}\textbf  {Q2}: Does the residual stay safe as friction drops?}{6}{subsection.6.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.3}\textbf  {Q3}: Raise the grip, or slow the lift?}{6}{subsection.6.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.4}\textbf  {Q4}: Does the certificate hold, and what does a slip allowance buy?}{6}{subsection.6.4}\protected@file@percent }
 \newlabel{sec:q4}{{6.4}{6}{\Q 4: Does the certificate hold, and what does a slip allowance buy?}{subsection.6.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Extended Study}{6}{section.7}\protected@file@percent }
-\newlabel{sec:extended}{{7}{6}{Extended Study}{section.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{6}{section.8}\protected@file@percent }
-\newlabel{sec:discussion}{{8}{6}{Discussion}{section.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Extended Study: What Survives When the Setup Changes?}{6}{section.7}\protected@file@percent }
+\newlabel{sec:extended}{{7}{6}{Extended Study: What Survives When the Setup Changes?}{section.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Findings that hold}{6}{subsection.7.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Anatomy of a failure} (object 2, $r=1.2$, seed 2). Top: demand $g+a(t)$ against the static, kinetic and certified capacities for the grip each policy chose. Middle: speed of the fingers relative to the rod, with kinetic friction active shaded. Bottom: slip. Left, B2: the demand crosses the static capacity at 0.03\,s; the rod breaks away at 0.09\,s, kinetic friction persists for 0.17\,s, and slip ends at 21\,mm. Right, B5: the certified grip keeps the demand below the static capacity throughout; the residual motion is elastic and returns to zero.}}{7}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:anatomy}{{5}{7}{\textbf {Anatomy of a failure} (object 2, $r=1.2$, seed 2). Top: demand $g+a(t)$ against the static, kinetic and certified capacities for the grip each policy chose. Middle: speed of the fingers relative to the rod, with kinetic friction active shaded. Bottom: slip. Left, B2: the demand crosses the static capacity at 0.03\,s; the rod breaks away at 0.09\,s, kinetic friction persists for 0.17\,s, and slip ends at 21\,mm. Right, B5: the certified grip keeps the demand below the static capacity throughout; the residual motion is elastic and returns to zero}{figure.caption.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Findings that break}{7}{subsection.7.2}\protected@file@percent }
+\citation{canudas1995}
+\citation{olsson1998}
+\citation{todorov2012}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {Controlled study overview.} Each row of Fig.~\ref {fig:ctrl} changes a single design choice relative to the reference configuration and reruns every method on the same objects and episode seeds. Rows T1--T4 retrain B2 and B5 (5 seeds each); all other rows reuse the trained weights.}}{8}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:overview}{{6}{8}{\textbf {Controlled study overview.} Each row of Fig.~\ref {fig:ctrl} changes a single design choice relative to the reference configuration and reruns every method on the same objects and episode seeds. Rows T1--T4 retrain B2 and B5 (5 seeds each); all other rows reuse the trained weights}{figure.caption.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Training choices}{8}{subsection.7.3}\protected@file@percent }
+\newlabel{sec:trainrows}{{7.3}{8}{Training choices}{subsection.7.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}An action-space safety map}{8}{subsection.7.4}\protected@file@percent }
+\newlabel{sec:map}{{7.4}{8}{An action-space safety map}{subsection.7.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}How tight is the bound?}{8}{subsection.7.5}\protected@file@percent }
+\newlabel{sec:tight}{{7.5}{8}{How tight is the bound?}{subsection.7.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{8}{section.8}\protected@file@percent }
+\newlabel{sec:discussion}{{8}{8}{Discussion}{section.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {Controlled study.} Each cell is the change from the reference configuration (top row, absolute values), with the resulting absolute value in parentheses; * marks a 95\% bootstrap interval that excludes zero. Red is worse (more failures, more grip, longer episodes). Failures count lifts that slip more than the row's tolerance or drop the rod, over 160 lifts (B0, B0S) or 800 lifts (learned methods, 5 seeds).}}{9}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:ctrl}{{7}{9}{\textbf {Controlled study.} Each cell is the change from the reference configuration (top row, absolute values), with the resulting absolute value in parentheses; * marks a 95\% bootstrap interval that excludes zero. Red is worse (more failures, more grip, longer episodes). Failures count lifts that slip more than the row's tolerance or drop the rod, over 160 lifts (B0, B0S) or 800 lifts (learned methods, 5 seeds)}{figure.caption.9}{}}
 \citation{canudas1995}
 \citation{xydas1999}
 \citation{tobin2017}
 \citation{peng2018}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Anatomy of a failure} (object 2, $r=1.2$, seed 2). Top: demand $g+a(t)$ against the static, kinetic and certified capacities for the grip each policy chose. Middle: speed of the fingers relative to the rod, with kinetic friction active shaded. Bottom: slip. Left, B2: the demand crosses the static capacity at 0.03\,s; the rod breaks away at 0.09\,s, kinetic friction persists for 0.17\,s, and slip ends at 21\,mm. Right, B5: the certified grip keeps the demand below the static capacity throughout; the residual motion is elastic and returns to zero.}}{7}{figure.caption.7}\protected@file@percent }
-\newlabel{fig:anatomy}{{5}{7}{\textbf {Anatomy of a failure} (object 2, $r=1.2$, seed 2). Top: demand $g+a(t)$ against the static, kinetic and certified capacities for the grip each policy chose. Middle: speed of the fingers relative to the rod, with kinetic friction active shaded. Bottom: slip. Left, B2: the demand crosses the static capacity at 0.03\,s; the rod breaks away at 0.09\,s, kinetic friction persists for 0.17\,s, and slip ends at 21\,mm. Right, B5: the certified grip keeps the demand below the static capacity throughout; the residual motion is elastic and returns to zero}{figure.caption.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Limitations}{7}{section.9}\protected@file@percent }
-\newlabel{sec:lim}{{9}{7}{Limitations}{section.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{7}{section.10}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces \textbf  {When the certificate fails} (row E7, lift height 20\,cm, B5, $r=1.2$). (a) The demand peaks at 95\% of the true static capacity, just below the certified level, so Coulomb friction should hold the rod. (b) The soft contact creeps at up to 12\,mm/s before peak acceleration; the emulator's kinetic switch, which reads the relative speed with a one-step lag that adds about 8\,mm/s here, fires at a true relative speed of 12\,mm/s (kinetic friction shaded), and the rod slides. (c) The certified lift ends 6\,mm low.}}{10}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:e7case}{{8}{10}{\textbf {When the certificate fails} (row E7, lift height 20\,cm, B5, $r=1.2$). (a) The demand peaks at 95\% of the true static capacity, just below the certified level, so Coulomb friction should hold the rod. (b) The soft contact creeps at up to 12\,mm/s before peak acceleration; the emulator's kinetic switch, which reads the relative speed with a one-step lag that adds about 8\,mm/s here, fires at a true relative speed of 12\,mm/s (kinetic friction shaded), and the rod slides. (c) The certified lift ends 6\,mm low}{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces \textbf  {Action-space safety map.} Fixed residual actions on the 40 test objects: lift time (columns) against grip relative to the model's grip for that lift time (rows). (a, b) Percentage of failed lifts without a shield at $r=1.0$ and $r=1.2$. (c) With the grip shield. (d) Mean grip relative to the object's weight after the shield. Circles mark the mean effective actions of the five trained B2 policies.}}{10}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:safetymap}{{9}{10}{\textbf {Action-space safety map.} Fixed residual actions on the 40 test objects: lift time (columns) against grip relative to the model's grip for that lift time (rows). (a, b) Percentage of failed lifts without a shield at $r=1.0$ and $r=1.2$. (c) With the grip shield. (d) Mean grip relative to the object's weight after the shield. Circles mark the mean effective actions of the five trained B2 policies}{figure.caption.11}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Limitations}{10}{section.9}\protected@file@percent }
+\newlabel{sec:lim}{{9}{10}{Limitations}{section.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{10}{section.10}\protected@file@percent }
 \bibcite{johansson1984}{1}
 \bibcite{veiga2020}{2}
 \bibcite{romeo2020}{3}
@@ -131,6 +150,8 @@
 \bibcite{garcia2015}{20}
 \bibcite{brunke2022}{21}
 \bibcite{alshiekh2018}{22}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces \textbf  {Bound against measured slip} for deliberately under-gripped lifts (grip 85--100\% of the no-onset grip, 40 objects; log axes, zeros drawn at the left and bottom edges; dashed line: slip equal to the bound). Points below the line are covered by the bound. Crosses are lifts that dropped the rod, where the slip is the rod's fall.}}{11}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:tightness}{{10}{11}{\textbf {Bound against measured slip} for deliberately under-gripped lifts (grip 85--100\% of the no-onset grip, 40 objects; log axes, zeros drawn at the left and bottom edges; dashed line: slip equal to the bound). Points below the line are covered by the bound. Crosses are lifts that dropped the rod, where the slip is the rod's fall}{figure.caption.12}{}}
 \bibcite{ames2019}{23}
 \bibcite{fisac2019}{24}
 \bibcite{wabersich2021}{25}
@@ -150,72 +171,78 @@
 \bibcite{tobin2017}{39}
 \bibcite{peng2018}{40}
 \citation{canudas1995}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Proofs and Analysis}{11}{appendix.A}\protected@file@percent }
-\newlabel{app:proof}{{A}{11}{Proofs and Analysis}{appendix.A}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proof of Proposition~\ref {prop:lift}}{11}{subsection.A.1}\protected@file@percent }
-\newlabel{app:proofprop}{{A.1}{11}{Proof of Proposition~\ref {prop:lift}}{subsection.A.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Why a slip allowance is a cliff}{11}{subsection.A.2}\protected@file@percent }
-\newlabel{app:cliff}{{A.2}{11}{Why a slip allowance is a cliff}{subsection.A.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {The cliff.} Left: grip saved by allowing 3.5, 10 or 30\,mm of slip at $T=0.37$\,s, as a function of the assumed drop $r_{\max }$. Right: Proposition~\ref {prop:lift}'s bound as a function of grip for three values of $r_{\max }$; with any drop, the bound jumps from zero to centimetres as soon as slip can begin.}}{11}{figure.caption.8}\protected@file@percent }
-\newlabel{fig:cliffapp}{{6}{11}{\textbf {The cliff.} Left: grip saved by allowing 3.5, 10 or 30\,mm of slip at $T=0.37$\,s, as a function of the assumed drop $r_{\max }$. Right: Proposition~\ref {prop:lift}'s bound as a function of grip for three values of $r_{\max }$; with any drop, the bound jumps from zero to centimetres as soon as slip can begin}{figure.caption.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces \textbf  {Grip saved by a slip allowance} (\% of the no-onset grip), computed from Proposition~\ref {prop:lift}; the values are the same for every object.}}{12}{table.caption.9}\protected@file@percent }
-\newlabel{tab:allow}{{4}{12}{\textbf {Grip saved by a slip allowance} (\% of the no-onset grip), computed from Proposition~\ref {prop:lift}; the values are the same for every object}{table.caption.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B}Simulation Details}{13}{appendix.B}\protected@file@percent }
-\newlabel{app:sim}{{B}{13}{Simulation Details}{appendix.B}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Model and parameters}{13}{subsection.B.1}\protected@file@percent }
-\newlabel{app:model}{{B.1}{13}{Model and parameters}{subsection.B.1}{}}
-\newlabel{lst:xml}{{B.1}{13}{}{lstlisting.-1}{}}
-\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore xml.xml}{13}{lstlisting.-1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore mj1.py}{13}{lstlisting.-2}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces \textbf  {Simulation and task parameters.}}}{13}{table.caption.10}\protected@file@percent }
-\newlabel{tab:params}{{5}{13}{\textbf {Simulation and task parameters.}}{table.caption.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Development decisions}{14}{subsection.B.2}\protected@file@percent }
-\newlabel{app:devlog}{{B.2}{14}{Development decisions}{subsection.B.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Rig validation}{14}{subsection.B.3}\protected@file@percent }
-\newlabel{app:val}{{B.3}{14}{Rig validation}{subsection.B.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {Rig validation.} (a) Breakaway grip during a lift relative to the quasi-static prediction (mean and range over 8 objects). (b) Bound against measured slip in 120 random lifts (log axes; zero bounds drawn at the left edge; 32 dropped rods, all with bounds above 0.5\,m, omitted). (c) Elastic creep in well-held lifts.}}{14}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:validation}{{7}{14}{\textbf {Rig validation.} (a) Breakaway grip during a lift relative to the quasi-static prediction (mean and range over 8 objects). (b) Bound against measured slip in 120 random lifts (log axes; zero bounds drawn at the left edge; 32 dropped rods, all with bounds above 0.5\,m, omitted). (c) Elastic creep in well-held lifts}{figure.caption.11}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {C}Controller, Shield and Training}{15}{appendix.C}\protected@file@percent }
-\newlabel{app:ctrl}{{C}{15}{Controller, Shield and Training}{appendix.C}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {C.1}Probe, bound and shield code}{15}{subsection.C.1}\protected@file@percent }
-\newlabel{app:code}{{C.1}{15}{Probe, bound and shield code}{subsection.C.1}{}}
-\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore probe.py}{15}{lstlisting.-3}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore lift\textunderscore bound.py}{15}{lstlisting.-4}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore shield\textunderscore grip.py}{15}{lstlisting.-5}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore shield\textunderscore time.py}{15}{lstlisting.-6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}Proofs and Analysis}{14}{appendix.A}\protected@file@percent }
+\newlabel{app:proof}{{A}{14}{Proofs and Analysis}{appendix.A}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proof of Proposition~\ref {prop:lift}}{14}{subsection.A.1}\protected@file@percent }
+\newlabel{app:proofprop}{{A.1}{14}{Proof of Proposition~\ref {prop:lift}}{subsection.A.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Why a slip allowance is a cliff}{14}{subsection.A.2}\protected@file@percent }
+\newlabel{app:cliff}{{A.2}{14}{Why a slip allowance is a cliff}{subsection.A.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces \textbf  {The cliff.} Left: grip saved by allowing 3.5, 10 or 30\,mm of slip at $T=0.37$\,s, as a function of the assumed drop $r_{\max }$. Right: Proposition~\ref {prop:lift}'s bound as a function of grip for three values of $r_{\max }$; with any drop, the bound jumps from zero to centimetres as soon as slip can begin.}}{14}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:cliffapp}{{11}{14}{\textbf {The cliff.} Left: grip saved by allowing 3.5, 10 or 30\,mm of slip at $T=0.37$\,s, as a function of the assumed drop $r_{\max }$. Right: Proposition~\ref {prop:lift}'s bound as a function of grip for three values of $r_{\max }$; with any drop, the bound jumps from zero to centimetres as soon as slip can begin}{figure.caption.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces \textbf  {Grip saved by a slip allowance} (\% of the no-onset grip), computed from Proposition~\ref {prop:lift}; the values are the same for every object.}}{15}{table.caption.14}\protected@file@percent }
+\newlabel{tab:allow}{{4}{15}{\textbf {Grip saved by a slip allowance} (\% of the no-onset grip), computed from Proposition~\ref {prop:lift}; the values are the same for every object}{table.caption.14}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Simulation Details}{16}{appendix.B}\protected@file@percent }
+\newlabel{app:sim}{{B}{16}{Simulation Details}{appendix.B}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Model and parameters}{16}{subsection.B.1}\protected@file@percent }
+\newlabel{app:model}{{B.1}{16}{Model and parameters}{subsection.B.1}{}}
+\newlabel{lst:xml}{{B.1}{16}{}{lstlisting.-1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore xml.xml}{16}{lstlisting.-1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore mj1.py}{16}{lstlisting.-2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces \textbf  {Simulation and task parameters.}}}{16}{table.caption.15}\protected@file@percent }
+\newlabel{tab:params}{{5}{16}{\textbf {Simulation and task parameters.}}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Development decisions}{17}{subsection.B.2}\protected@file@percent }
+\newlabel{app:devlog}{{B.2}{17}{Development decisions}{subsection.B.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Rig validation}{17}{subsection.B.3}\protected@file@percent }
+\newlabel{app:val}{{B.3}{17}{Rig validation}{subsection.B.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces \textbf  {Rig validation.} (a) Breakaway grip during a lift relative to the quasi-static prediction (mean and range over 8 objects). (b) Bound against measured slip in 120 random lifts (log axes; zero bounds drawn at the left edge; 32 dropped rods, all with bounds above 0.5\,m, omitted). (c) Elastic creep in well-held lifts.}}{17}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:validation}{{12}{17}{\textbf {Rig validation.} (a) Breakaway grip during a lift relative to the quasi-static prediction (mean and range over 8 objects). (b) Bound against measured slip in 120 random lifts (log axes; zero bounds drawn at the left edge; 32 dropped rods, all with bounds above 0.5\,m, omitted). (c) Elastic creep in well-held lifts}{figure.caption.16}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Controller, Shield and Training}{18}{appendix.C}\protected@file@percent }
+\newlabel{app:ctrl}{{C}{18}{Controller, Shield and Training}{appendix.C}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.1}Probe, bound and shield code}{18}{subsection.C.1}\protected@file@percent }
+\newlabel{app:code}{{C.1}{18}{Probe, bound and shield code}{subsection.C.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore probe.py}{18}{lstlisting.-3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore lift\textunderscore bound.py}{18}{lstlisting.-4}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore shield\textunderscore grip.py}{18}{lstlisting.-5}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore shield\textunderscore time.py}{18}{lstlisting.-6}\protected@file@percent }
 \citation{salimans2017}
 \citation{kingma2015}
 \citation{aidoo2026b}
 \citation{aidoo2026c}
-\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore model\textunderscore grip.py}{16}{lstlisting.-7}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore features.py}{16}{lstlisting.-8}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore run\textunderscore episode.py}{16}{lstlisting.-9}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore score.py}{16}{lstlisting.-10}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {C.2}Training details}{16}{subsection.C.2}\protected@file@percent }
-\newlabel{app:train}{{C.2}{16}{Training details}{subsection.C.2}{}}
-\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore train.py}{16}{lstlisting.-11}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces \textbf  {Training hyperparameters} (identical for B2 and B5).}}{17}{table.caption.12}\protected@file@percent }
-\newlabel{tab:hyper}{{6}{17}{\textbf {Training hyperparameters} (identical for B2 and B5)}{table.caption.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces \textbf  {Training curves.} Reward of the current (unperturbed) policy on each iteration's 6 training objects. Both methods improve on the model controller (dotted) within about 600 episodes. The unshielded runs dip whenever an iteration's batch contains a lift that slips: three of the five B2 runs ended on such a batch. The shielded runs never fail and converge to the same reward, about $-0.50$.}}{17}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:training}{{8}{17}{\textbf {Training curves.} Reward of the current (unperturbed) policy on each iteration's 6 training objects. Both methods improve on the model controller (dotted) within about 600 episodes. The unshielded runs dip whenever an iteration's batch contains a lift that slips: three of the five B2 runs ended on such a batch. The shielded runs never fail and converge to the same reward, about $-0.50$}{figure.caption.13}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces \textbf  {Test set, every method at every $r$} ($r_{\max }=1.2$). Failure counts with Wilson 95\% intervals (\%); $\Delta T$ and $\Delta F/mg$ against B0 with hierarchical bootstrap 95\% intervals (seeds, then objects); ``obj.\ worse'' counts objects that failed at least once under the method but never under B0, with the Holm-corrected exact McNemar $p$ (B0S and B4t are outside the pre-registered Holm families and show the raw $p$). All lift-time and grip differences have Holm-corrected Wilcoxon $p<10^{-10}$.}}{18}{table.caption.14}\protected@file@percent }
-\newlabel{tab:perr}{{7}{18}{\textbf {Test set, every method at every $r$} ($r_{\max }=1.2$). Failure counts with Wilson 95\% intervals (\%); $\Delta T$ and $\Delta F/mg$ against B0 with hierarchical bootstrap 95\% intervals (seeds, then objects); ``obj.\ worse'' counts objects that failed at least once under the method but never under B0, with the Holm-corrected exact McNemar $p$ (B0S and B4t are outside the pre-registered Holm families and show the raw $p$). All lift-time and grip differences have Holm-corrected Wilcoxon $p<10^{-10}$}{table.caption.14}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D}Additional Main Results}{18}{appendix.D}\protected@file@percent }
-\newlabel{app:main}{{D}{18}{Additional Main Results}{appendix.D}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces \textbf  {Per-seed test results.} $\bar  a_T$, $\bar  a_F$: effective mean duration and grip actions after any shield projection ($\bar  a_F>0$ means a grip above the model's for the chosen lift time). Failures out of 40 lifts at each $r$.}}{19}{table.caption.15}\protected@file@percent }
-\newlabel{tab:perseed}{{8}{19}{\textbf {Per-seed test results.} $\bar a_T$, $\bar a_F$: effective mean duration and grip actions after any shield projection ($\bar a_F>0$ means a grip above the model's for the chosen lift time). Failures out of 40 lifts at each $r$}{table.caption.15}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces \textbf  {Confirmation set} (40 fresh objects, $r\sim U[1.0,1.3]$ per object, run once after the test results were committed). Failures with Wilson 95\% intervals (\%). B2's failures by $r$ band: (1.0, 1.1]: 1, (1.1, 1.2]: 16, (1.2, 1.3]: 18.}}{19}{table.caption.16}\protected@file@percent }
-\newlabel{tab:confirm}{{9}{19}{\textbf {Confirmation set} (40 fresh objects, $r\sim U[1.0,1.3]$ per object, run once after the test results were committed). Failures with Wilson 95\% intervals (\%). B2's failures by $r$ band: (1.0, 1.1]: 1, (1.1, 1.2]: 16, (1.2, 1.3]: 18}{table.caption.16}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces \textbf  {Mismatched $r_{\max }$.} Top: B0S and B5 (trained with $r_{\max }=1.2$) evaluated with the shield set to $r_{\max }\in \{1.0,1.2,1.4\}$; failures out of 40 (B0S) or 200 (B5) lifts per $r$. Bottom: the certificate over all shielded methods (B0S, B4g, B4t, B5), split by whether the true $r$ is within the assumed bound; ``exceed'' is the share of lifts whose slip exceeds the bound (dominated by elastic creep, deviation D1).}}{19}{table.caption.17}\protected@file@percent }
-\newlabel{tab:rmax}{{10}{19}{\textbf {Mismatched $r_{\max }$.} Top: B0S and B5 (trained with $r_{\max }=1.2$) evaluated with the shield set to $r_{\max }\in \{1.0,1.2,1.4\}$; failures out of 40 (B0S) or 200 (B5) lifts per $r$. Bottom: the certificate over all shielded methods (B0S, B4g, B4t, B5), split by whether the true $r$ is within the assumed bound; ``exceed'' is the share of lifts whose slip exceeds the bound (dominated by elastic creep, deviation D1)}{table.caption.17}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces \textbf  {Every failure of the worst unshielded seed} (B2 seed 2, $r=1.2$, 14 of 40 test objects): slip against time for the model controller (B0), the unshielded residual (B2) and the shield-trained residual (B5, seed 2) on the same object and episode seed. All 14 failures share the mechanism of Fig.~\ref {fig:anatomy}; final slips range from 9 to 25\,mm.}}{20}{figure.caption.18}\protected@file@percent }
-\newlabel{fig:gallery}{{9}{20}{\textbf {Every failure of the worst unshielded seed} (B2 seed 2, $r=1.2$, 14 of 40 test objects): slip against time for the model controller (B0), the unshielded residual (B2) and the shield-trained residual (B5, seed 2) on the same object and episode seed. All 14 failures share the mechanism of Fig.~\ref {fig:anatomy}; final slips range from 9 to 25\,mm}{figure.caption.18}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces \textbf  {Per-object test results.} $m$ and $\mu _s$ are the object's mass and static friction; $F_{\rm  stuck}/F_b$ is the probed breakaway grip relative to the true quasi-static breakaway grip $F_b=mg/(2\mu _s)$ (it is $\ge 1$ by construction and at most $1/0.9$ up to sensing noise); probes and probe time are from the B0 episode at $r=1$. Grip columns are $F/mg$ (mean over $r$ and seeds). B2 failures count lifts with slip $>5$\,mm over 5 seeds $\times $ 4 values of $r$.}}{21}{table.caption.19}\protected@file@percent }
-\newlabel{tab:perobj}{{11}{21}{\textbf {Per-object test results.} $m$ and $\mu _s$ are the object's mass and static friction; $F_{\rm stuck}/F_b$ is the probed breakaway grip relative to the true quasi-static breakaway grip $F_b=mg/(2\mu _s)$ (it is $\ge 1$ by construction and at most $1/0.9$ up to sensing noise); probes and probe time are from the B0 episode at $r=1$. Grip columns are $F/mg$ (mean over $r$ and seeds). B2 failures count lifts with slip $>5$\,mm over 5 seeds $\times $ 4 values of $r$}{table.caption.19}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {E}Extended Study Details}{22}{appendix.E}\protected@file@percent }
-\newlabel{app:ext}{{E}{22}{Extended Study Details}{appendix.E}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {F}Protocol, Deviations and Reproducibility}{23}{appendix.F}\protected@file@percent }
-\newlabel{app:protocol}{{F}{23}{Protocol, Deviations and Reproducibility}{appendix.F}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Compute (pending)}}{23}{table.caption.20}\protected@file@percent }
-\newlabel{tab:compute}{{12}{23}{Compute (pending)}{table.caption.20}{}}
-\gdef \@abspage@last{23}
+\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore model\textunderscore grip.py}{19}{lstlisting.-7}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore features.py}{19}{lstlisting.-8}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore run\textunderscore episode.py}{19}{lstlisting.-9}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore score.py}{19}{lstlisting.-10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.2}Training details}{19}{subsection.C.2}\protected@file@percent }
+\newlabel{app:train}{{C.2}{19}{Training details}{subsection.C.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{code\textunderscore train.py}{19}{lstlisting.-11}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces \textbf  {Training hyperparameters} (identical for B2 and B5).}}{20}{table.caption.17}\protected@file@percent }
+\newlabel{tab:hyper}{{6}{20}{\textbf {Training hyperparameters} (identical for B2 and B5)}{table.caption.17}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces \textbf  {Training curves.} Reward of the current (unperturbed) policy on each iteration's 6 training objects. Both methods improve on the model controller (dotted) within about 600 episodes. The unshielded runs dip whenever an iteration's batch contains a lift that slips: three of the five B2 runs ended on such a batch. The shielded runs never fail and converge to the same reward, about $-0.50$.}}{20}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:training}{{13}{20}{\textbf {Training curves.} Reward of the current (unperturbed) policy on each iteration's 6 training objects. Both methods improve on the model controller (dotted) within about 600 episodes. The unshielded runs dip whenever an iteration's batch contains a lift that slips: three of the five B2 runs ended on such a batch. The shielded runs never fail and converge to the same reward, about $-0.50$}{figure.caption.18}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces \textbf  {Test set, every method at every $r$} ($r_{\max }=1.2$). Failure counts with Wilson 95\% intervals (\%); $\Delta T$ and $\Delta F/mg$ against B0 with hierarchical bootstrap 95\% intervals (seeds, then objects); ``obj.\ worse'' counts objects that failed at least once under the method but never under B0, with the Holm-corrected exact McNemar $p$ (B0S and B4t are outside the pre-registered Holm families and show the raw $p$). All lift-time and grip differences have Holm-corrected Wilcoxon $p<10^{-10}$.}}{21}{table.caption.19}\protected@file@percent }
+\newlabel{tab:perr}{{7}{21}{\textbf {Test set, every method at every $r$} ($r_{\max }=1.2$). Failure counts with Wilson 95\% intervals (\%); $\Delta T$ and $\Delta F/mg$ against B0 with hierarchical bootstrap 95\% intervals (seeds, then objects); ``obj.\ worse'' counts objects that failed at least once under the method but never under B0, with the Holm-corrected exact McNemar $p$ (B0S and B4t are outside the pre-registered Holm families and show the raw $p$). All lift-time and grip differences have Holm-corrected Wilcoxon $p<10^{-10}$}{table.caption.19}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}Additional Main Results}{21}{appendix.D}\protected@file@percent }
+\newlabel{app:main}{{D}{21}{Additional Main Results}{appendix.D}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces \textbf  {Per-seed test results.} $\bar  a_T$, $\bar  a_F$: effective mean duration and grip actions after any shield projection ($\bar  a_F>0$ means a grip above the model's for the chosen lift time). Failures out of 40 lifts at each $r$.}}{22}{table.caption.20}\protected@file@percent }
+\newlabel{tab:perseed}{{8}{22}{\textbf {Per-seed test results.} $\bar a_T$, $\bar a_F$: effective mean duration and grip actions after any shield projection ($\bar a_F>0$ means a grip above the model's for the chosen lift time). Failures out of 40 lifts at each $r$}{table.caption.20}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces \textbf  {Confirmation set} (40 fresh objects, $r\sim U[1.0,1.3]$ per object, run once after the test results were committed). Failures with Wilson 95\% intervals (\%). B2's failures by $r$ band: (1.0, 1.1]: 1, (1.1, 1.2]: 16, (1.2, 1.3]: 18.}}{22}{table.caption.21}\protected@file@percent }
+\newlabel{tab:confirm}{{9}{22}{\textbf {Confirmation set} (40 fresh objects, $r\sim U[1.0,1.3]$ per object, run once after the test results were committed). Failures with Wilson 95\% intervals (\%). B2's failures by $r$ band: (1.0, 1.1]: 1, (1.1, 1.2]: 16, (1.2, 1.3]: 18}{table.caption.21}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces \textbf  {Mismatched $r_{\max }$.} Top: B0S and B5 (trained with $r_{\max }=1.2$) evaluated with the shield set to $r_{\max }\in \{1.0,1.2,1.4\}$; failures out of 40 (B0S) or 200 (B5) lifts per $r$. Bottom: the certificate over all shielded methods (B0S, B4g, B4t, B5), split by whether the true $r$ is within the assumed bound; ``exceed'' is the share of lifts whose slip exceeds the bound (dominated by elastic creep, deviation D1).}}{22}{table.caption.22}\protected@file@percent }
+\newlabel{tab:rmax}{{10}{22}{\textbf {Mismatched $r_{\max }$.} Top: B0S and B5 (trained with $r_{\max }=1.2$) evaluated with the shield set to $r_{\max }\in \{1.0,1.2,1.4\}$; failures out of 40 (B0S) or 200 (B5) lifts per $r$. Bottom: the certificate over all shielded methods (B0S, B4g, B4t, B5), split by whether the true $r$ is within the assumed bound; ``exceed'' is the share of lifts whose slip exceeds the bound (dominated by elastic creep, deviation D1)}{table.caption.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces \textbf  {Every failure of the worst unshielded seed} (B2 seed 2, $r=1.2$, 14 of 40 test objects): slip against time for the model controller (B0), the unshielded residual (B2) and the shield-trained residual (B5, seed 2) on the same object and episode seed. All 14 failures share the mechanism of Fig.~\ref {fig:anatomy}; final slips range from 9 to 25\,mm.}}{23}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:gallery}{{14}{23}{\textbf {Every failure of the worst unshielded seed} (B2 seed 2, $r=1.2$, 14 of 40 test objects): slip against time for the model controller (B0), the unshielded residual (B2) and the shield-trained residual (B5, seed 2) on the same object and episode seed. All 14 failures share the mechanism of Fig.~\ref {fig:anatomy}; final slips range from 9 to 25\,mm}{figure.caption.23}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces \textbf  {Per-object test results.} $m$ and $\mu _s$ are the object's mass and static friction; $F_{\rm  stuck}/F_b$ is the probed breakaway grip relative to the true quasi-static breakaway grip $F_b=mg/(2\mu _s)$ (it is $\ge 1$ by construction and at most $1/0.9$ up to sensing noise); probes and probe time are from the B0 episode at $r=1$. Grip columns are $F/mg$ (mean over $r$ and seeds). B2 failures count lifts with slip $>5$\,mm over 5 seeds $\times $ 4 values of $r$.}}{24}{table.caption.24}\protected@file@percent }
+\newlabel{tab:perobj}{{11}{24}{\textbf {Per-object test results.} $m$ and $\mu _s$ are the object's mass and static friction; $F_{\rm stuck}/F_b$ is the probed breakaway grip relative to the true quasi-static breakaway grip $F_b=mg/(2\mu _s)$ (it is $\ge 1$ by construction and at most $1/0.9$ up to sensing noise); probes and probe time are from the B0 episode at $r=1$. Grip columns are $F/mg$ (mean over $r$ and seeds). B2 failures count lifts with slip $>5$\,mm over 5 seeds $\times $ 4 values of $r$}{table.caption.24}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E}Extended Study Details}{25}{appendix.E}\protected@file@percent }
+\newlabel{app:ext}{{E}{25}{Extended Study Details}{appendix.E}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces \textbf  {Controlled changes.} Each row modifies a single design choice relative to the reference configuration (test set: 40 objects, $r\in \{1.0,1.1,1.2,1.3\}$, $r_{\max }=1.2$, tolerance 5\,mm, margin 1.5\,mm, probe step 0.9, slip-monitor noise 0.5\,mm, weight error $\pm 10$\%, lift height 10\,cm, pad stiffness solref 0.003, kinetic switch at 2\,cm/s, training on $r\in [1,1.2]$ for 20 iterations with $\lambda =1$). Rows E7L and E9L are diagnostics added after E7 and E9 were seen (Addendum A6).}}{25}{table.caption.25}\protected@file@percent }
+\newlabel{tab:changes}{{12}{25}{\textbf {Controlled changes.} Each row modifies a single design choice relative to the reference configuration (test set: 40 objects, $r\in \{1.0,1.1,1.2,1.3\}$, $r_{\max }=1.2$, tolerance 5\,mm, margin 1.5\,mm, probe step 0.9, slip-monitor noise 0.5\,mm, weight error $\pm 10$\%, lift height 10\,cm, pad stiffness solref 0.003, kinetic switch at 2\,cm/s, training on $r\in [1,1.2]$ for 20 iterations with $\lambda =1$). Rows E7L and E9L are diagnostics added after E7 and E9 were seen (Addendum A6)}{table.caption.25}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces \textbf  {Controlled study, absolute values.} For every row and method: failed lifts (slip above the row's tolerance, or a drop) out of all lifts (40 objects $\times $ 4 values of $r$, $\times $ 5 seeds for learned methods), mean lift time $T$ (ms) and mean grip $F/mg$ (\%). Row descriptions are in Table~\ref {tab:changes}.}}{26}{table.caption.26}\protected@file@percent }
+\newlabel{tab:controlled}{{13}{26}{\textbf {Controlled study, absolute values.} For every row and method: failed lifts (slip above the row's tolerance, or a drop) out of all lifts (40 objects $\times $ 4 values of $r$, $\times $ 5 seeds for learned methods), mean lift time $T$ (ms) and mean grip $F/mg$ (\%). Row descriptions are in Table~\ref {tab:changes}}{table.caption.26}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces \textbf  {Controlled study: change in lift time (ms)}, same layout as Fig.~\ref {fig:ctrl}. Only the shield rows that decline (E2, E3: the model's 1\,s lift is used), the time projection and the retrained wider-action policies (T2) move the lift time.}}{27}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:ctrltime}{{15}{27}{\textbf {Controlled study: change in lift time (ms)}, same layout as Fig.~\ref {fig:ctrl}. Only the shield rows that decline (E2, E3: the model's 1\,s lift is used), the time projection and the retrained wider-action policies (T2) move the lift time}{figure.caption.27}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {F}Protocol, Deviations and Reproducibility}{28}{appendix.F}\protected@file@percent }
+\newlabel{app:protocol}{{F}{28}{Protocol, Deviations and Reproducibility}{appendix.F}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces \textbf  {Compute.} Episodes simulated per experiment and single-core CPU hours at the measured 0.075\,s per episode (each episode simulates about 6\,s of contact-rich dynamics at 1\,ms). Everything ran on two CPU cores; no GPU.}}{28}{table.caption.28}\protected@file@percent }
+\newlabel{tab:compute}{{14}{28}{\textbf {Compute.} Episodes simulated per experiment and single-core CPU hours at the measured 0.075\,s per episode (each episode simulates about 6\,s of contact-rich dynamics at 1\,ms). Everything ran on two CPU cores; no GPU}{table.caption.28}{}}
+\gdef \@abspage@last{29}

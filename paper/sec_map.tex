@@ -1,0 +1,18 @@
+\subsection{An action-space safety map}\label{sec:map}
+Why does every policy end up at the fastest lift? We swept fixed residual actions over a $7\times9$ grid of lift times and
+grip scales on the 40 test objects (Fig.~\ref{fig:safetymap}). Two facts explain the learned policies. First, \textbf{fast lifts
+tolerate grip cuts better}: at the model's grip minus 6\% ($a_F=-0.25$), no lift failed at $T=0.37$\,s with $r=1$, but 52\%
+failed at $T=1$\,s. This is the quasi-static conservatism of Table~\ref{tab:val} again: the faster the lift, the more the
+model over-predicts the grip it needs, so a policy rewarded for speed and light grip is pushed to the fastest corner, where
+the hidden margin is largest. The five B2 policies (circles) sit at that corner, 6--9\% below the model's grip. Second,
+\textbf{the margin shrinks once friction may drop}: at $r=1.2$ the same cut failed 8\% of fast lifts and the safe region
+receded. With the grip shield, none of the 5{,}040 lifts in the grid failed, and the certified grip (panel d) depends only
+on the lift time, as the scale invariance of Appendix~\ref{app:cliff} predicts.
+
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{fig_safetymap.pdf}
+\caption{\textbf{Action-space safety map.} Fixed residual actions on the 40 test objects: lift time (columns) against grip
+relative to the model's grip for that lift time (rows). (a, b) Percentage of failed lifts without a shield at $r=1.0$ and
+$r=1.2$. (c) With the grip shield. (d) Mean grip relative to the object's weight after the shield. Circles mark the mean
+effective actions of the five trained B2 policies.}\label{fig:safetymap}
+\end{figure*}

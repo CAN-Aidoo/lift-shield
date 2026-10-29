@@ -1,0 +1,2 @@
+T1 trained on r = 1.0 only 3520
+T2 wider time action (scale 1.5) 3520

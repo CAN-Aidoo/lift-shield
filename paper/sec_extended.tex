@@ -59,12 +59,12 @@ demand instead of meeting it at the edge.
 
 \input{sec_diag.tex}
 
-Part of this failure is therefore an artefact of our emulator, but the underlying exposure is real. Real contacts move
-before they slide: pre-sliding displacement is part of every dynamic friction model~\cite{canudas1995,olsson1998}, and
-whether friction weakens during it depends on the materials. A certificate placed exactly at the onset boundary has no
-margin for this. \textbf{The practical fix is a margin on onset}, certifying $g+a\le(1-\delta)\,gF/\Fs$ for some
-$\delta>0$, which our zero-margin shield did not have. We report this as found rather than adding the fix after seeing
-the result.
+So E7 was an artefact, but E9 exposes something real. The shield places the grip exactly at the onset boundary, where
+the contact already creeps; if friction weakens during that creep, the certificate's premise (static friction until gross
+slip) fails. Real contacts also move before they slide: pre-sliding displacement is part of every dynamic friction
+model~\cite{canudas1995,olsson1998}, and whether friction weakens during it depends on the materials. \textbf{The practical
+fix is a margin on onset}, certifying $g+a\le(1-\delta)\,gF/\Fs$ for some $\delta>0$, which our zero-margin shield did not
+have. We report this as found rather than adding the fix after seeing the result.
 
 \begin{figure*}[t]\centering
 \includegraphics[width=\textwidth]{fig_e7case.pdf}

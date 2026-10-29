@@ -1,1 +1,35 @@
-\section{Extended Study Details}\label{app:ext} (pending)
+\section{Extended Study Details}\label{app:ext}
+\textbf{Design.} Table~\ref{tab:changes} lists every controlled change. Rows E1--E9 and S1--S6 reuse the reference weights;
+T1--T4 retrain B2 and B5 with five seeds each under the changed setting and evaluate them in the reference environment
+(T2 also uses the wider duration scale at test). Every row uses the 40 test objects (for E1 and E2, the same seed with the
+changed ranges), the same four values of $r$ and the same episode seeds as the reference. Significance in
+Fig.~\ref{fig:ctrl} uses a bootstrap over objects of the per-object means (10{,}000 resamples), paired for every row except
+E1 and E2. Table~\ref{tab:controlled} gives absolute values; Fig.~\ref{fig:ctrltime} adds the change in lift time.
+
+\input{tab_changes.tex}
+
+\input{tab_controlled.tex}
+
+\begin{figure}[!htbp]\centering
+\includegraphics[width=0.55\textwidth]{fig_ctrl_time.pdf}
+\caption{\textbf{Controlled study: change in lift time (ms)}, same layout as Fig.~\ref{fig:ctrl}. Only the shield rows that
+decline (E2, E3: the model's 1\,s lift is used), the time projection and the retrained wider-action policies (T2) move the
+lift time.}\label{fig:ctrltime}
+\end{figure}
+
+\textbf{Probe failures (E2, E3).} With $\mu_s\in[0.2,0.4]$ the probe's starting grip, chosen for $\mu=0.3$, is already below
+the breakaway grip for many objects; with 1.5\,mm monitor noise, the noise alone crosses the 2.5\,mm threshold within the
+first 300\,ms hold. In both cases the probe returns its default $\Fs=30$\,N. The model controller then grips at 30\,N, the
+residual's features fall far outside the training range, and the shield, whose bound is computed from $\Fs$, finds no
+certified fast lift and declines. A probe that starts from a higher grip and treats a first-step motion as ``unknown'' rather
+than as a measurement would avoid this; we did not change it.
+
+\textbf{Bound-tightness sweep.} 2{,}160 lifts: grips of 85, 88, 91, 94, 97 and 100\% of the no-onset grip, lift times 0.37,
+0.5 and 1\,s, $r\in\{1.0,1.1,1.2\}$, 40 objects, bound evaluated with $r_{\max}=r$. Of these, 491 dropped the rod (all with
+bounds above 12\,cm), 360 had a zero bound (largest slip 0.49\,mm) and 1{,}309 had a non-zero bound and kept the rod (median
+slip/bound 0.023; 7 exceedances, Section~\ref{sec:tight}).
+
+\textbf{Safety map.} 10{,}080 lifts: 63 fixed actions $\times$ 40 objects $\times$ $r\in\{1.0,1.2\}$ $\times$ with and
+without the grip shield (Fig.~\ref{fig:safetymap}).
+
+\input{app_trainrows.tex}

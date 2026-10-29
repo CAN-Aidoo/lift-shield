@@ -14,7 +14,9 @@ the certified slip jumps from zero to centimetres. For lifting, a useful certifi
 $g+a(t)\le gF/\Fs$ throughout the profile. It is simple, it needs no $r_{\max}$ at all, and our results suggest it gives up
 almost nothing relative to the full slip bound once $r_{\max}\ge1.1$. A slip allowance becomes valuable only when the
 friction drop is known to be small, for example on materials whose static and kinetic coefficients are measured to be
-close.
+close. The extended study adds one qualification: a certificate that sits exactly on the onset boundary inherits whatever
+happens there, and when friction weakened during pre-sliding creep (row E9) the certified lifts failed. An onset
+certificate should carry a margin, sized from measurements of how a contact creeps near its static limit.
 
 \finding{Grip or time.} When the shield must act, raising the grip kept the speed and slowing the lift kept the grip. Which
 is better depends on the application: for fragile objects the time projection is the natural choice, for throughput the
@@ -27,10 +29,14 @@ are a promising direction.
 \section{Limitations}\label{sec:lim}
 \finding{Simulation only.} All results are from MuJoCo with an emulated stick--slip transition. Real contacts show
 rate-dependent friction, pre-sliding displacement, load-dependent soft-finger friction and wear~\cite{canudas1995,xydas1999};
-our switching thresholds were tuned in development. The certificate assumes that $\Fs$ bounds the breakaway grip during the
+our switching thresholds were tuned in development, and the switch reads the relative speed with a one-step lag that we
+found only during the extended study. The lag did not change any confirmatory result (row R0L) but caused the
+certificate failures of row E7. The certificate assumes that $\Fs$ bounds the breakaway grip during the
 lift, which held here because the quasi-static model was conservative for fast lifts (Table~\ref{tab:val}); on hardware this
 must be measured. Domain randomisation~\cite{tobin2017,peng2018} over friction models would be a natural first step before
 hardware.
+\finding{A probe with a blind spot.} The probe assumes $\mu_s\ge0.3$ and a slip monitor much quieter than its motion
+threshold; when either fails, it reports the maximum grip and the shield declines (rows E2, E3). Safe, but not gentle.
 \finding{Narrow task.} The rod is a rigid box constrained to slide axially, held at its centre of mass by two pads. Rotational
 slip, off-centre grasps, deformable objects and multi-finger hands are outside this study.
 \finding{Policy class and budget.} Policies are linear and were trained for 1{,}560 episodes; all of them saturated the duration

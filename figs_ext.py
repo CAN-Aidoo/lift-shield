@@ -3,7 +3,7 @@ import json, sys, glob, numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 import lift_env as L
-from lift_env import sample_object, G, DT
+from lift_env import sample_object, G, DT, T0
 plt.rcParams.update({"font.family": "serif", "font.size": 7.5, "axes.spines.top": False, "axes.spines.right": False,
                      "axes.titlesize": 7.5, "legend.fontsize": 6.5})
 C = {"B0": "#6b6b6b", "B0S": "#a0a0a0", "B2": "#d1495b", "B4g": "#2e86ab", "B4t": "#8fb8de", "B5": "#1b4965"}
@@ -220,7 +220,7 @@ def safetymap():
         g = b2[b2.seed == s_]; aTm = np.log(g["T"] / T0).mean() / L.ST
         aFm = (np.log(g.F / np.array([model_grip(a, b) for a, b in zip(g.F_stuck, g["T"])])) / L.SF).mean(); pts.append((aTm, aFm))
     panels = [("(a) no shield, $r=1.0$", False, 1.0, "fail"), ("(b) no shield, $r=1.2$", False, 1.2, "fail"),
-              ("(c) grip shield, $r=1.2$", True, 1.2, "fail"), ("(d) grip after shield, $r=1.2$", True, 1.2, "F_rel")]
+              ("(c) grip shield, $r=1.2$", True, 1.2, "fail"), ("(d) grip / weight with shield, $r=1.2$", True, 1.2, "F_rel")]
     fig, ax = plt.subplots(1, 4, figsize=(7.16, 2.05))
     for k, (title, sh, r, col) in enumerate(panels):
         g = d[(d.shield == sh) & (d.r == r)]

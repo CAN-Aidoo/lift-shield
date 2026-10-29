@@ -177,3 +177,5 @@ step as the rod velocity). They are reported next to E7 and E9, not instead of t
 - Added 29 Oct 2026 after seeing E7L (0 shielded failures): row R0L repeats the reference configuration with the lag
   removed, to measure how much of the main-study results depend on the lag. Reported as a diagnostic next to the main
   results; the main results stay as registered.
+- Added 29 Oct 2026 after seeing T2 (certified lifts failing at r = 1.2 with 0.25 s lifts): row T2L repeats T2 with the
+  lag removed, to separate the emulator artefact from the policy change, as for E7L. Frozen before running.

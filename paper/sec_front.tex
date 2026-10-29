@@ -12,8 +12,11 @@ exploiting the model's conservatism at short lift times, and 12--16\% of its lif
 could drop; with the shield, at training or only at test time, none of 3{,}520 certified lifts did, at a cost of 6\%
 more grip and no speed, and the results replicated on fresh objects. The certificate holds because the shield ends up
 forbidding slip altogether: when friction may drop by 10\% or more, allowing even 10\,mm of slip saves no grip. A
-controlled study that changes one design choice at a time (19 changes, 6 methods) shows which conclusions survive
-heavier and more slippery objects, worse sensing, softer pads and different training choices.
+controlled study that changes one design choice at a time (19 changes, 6 methods, frozen before it was run) shows that
+the shield's benefit survives heavier objects, softer pads, poor weight estimates and most training choices. It also
+finds two real weaknesses: the breakaway probe fails on slippery objects or with a noisy slip sensor, leaving the shield
+nothing to certify; and because the shield sits exactly at the onset boundary, it fails when friction is allowed to weaken
+during the creep that precedes slip. A margin on onset is the obvious fix.
 \end{abstract}
 
 \section{Introduction}
@@ -57,7 +60,9 @@ shield removes every failure, with the certificate checked on 4{,}480 shielded l
 \item An \textbf{\emph{analysis of why slip allowances are worth little}}: the bound is a cliff in the assumed friction drop,
 quantified analytically, on an action-space safety map and in failure traces.
 \item A \textbf{\emph{controlled one-change-at-a-time study}} (19 changes $\times$ 6 methods, frozen before it was run) of the
-environment, sensing, shield settings and training choices, with all code, data and per-episode results released.
+environment, sensing, shield settings and training choices, which locates two failure modes, a probe that returns no
+information and friction that weakens before gross slip, and separates a simulator artefact from a real exposure with
+pre-registered diagnostics. All code, data and per-episode results are released.
 \end{itemize}
 
 \section{Related Work}
