@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite it as below."
+title: "Is a Little Slip Worth It? Certified Fast Lifting for Learned Grasp Policies Under a Static-to-Kinetic Friction Drop"
+authors:
+  - family-names: Aidoo
+    given-names: Clement
+    affiliation: CANLABS
+    orcid: "https://orcid.org/0009-0005-6893-2677"
+    email: clement.aidoo@canlabs.org
+repository-code: "https://github.com/CAN-Aidoo/lift-shield"
+license: MIT
+date-released: 2026-10-29
+keywords: [robot grasping, friction, stick-slip, safe reinforcement learning, residual learning, shielding, MuJoCo]

@@ -1,7 +1,7 @@
 # lift-shield
 
 **Is a Little Slip Worth It? Certified Fast Lifting for Residual Policies Under a Static-to-Kinetic Friction Drop**
-Clement Aidoo, CANLABS (Paper 7). MuJoCo simulation, pre-registered.
+Clement Aidoo, CANLABS (Paper 7). MuJoCo simulation, pre-registered. Paper: [`paper/Aidoo_lift_shield.pdf`](paper/Aidoo_lift_shield.pdf)
 
 - `lift_env.py`: rig, probe, model controller, slip bound (Proposition 1) and grip/time shields
 - `validate.py`: rig validation (V1–V4) → `results/validation.json`
