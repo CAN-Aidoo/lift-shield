@@ -112,3 +112,57 @@ Training: antithetic ES as Paper 5 (6 pairs, 6 objects per iteration, sigma 0.1,
 - **D3 (29 Oct 2026, exploratory).** Not pre-registered: how much grip a slip allowance buys as a function of r_max
   (`explore_allowance.py`). Reported and labelled as exploratory.
 - Naming: the bound called "Proposition 3" in code comments is Proposition 1 in the paper.
+
+## Addendum A: extended study (frozen 29 Oct 2026, after the confirmatory results above were committed)
+
+Everything in this addendum is **exploratory**: it was designed after the test and confirmation results were known.
+It is fixed here, before any of it is run, so that what we report is not selected after the fact.
+
+### A1. Controlled one-change-at-a-time study
+Reference configuration = the test set above (40 objects, seed 11, r in {1.0, 1.1, 1.2, 1.3}, r_max = 1.2, weights
+from the main training). Each row changes **one** design choice and re-runs B0, B0S, B2, B4g, B4t, B5 on the same
+objects and episode seeds. Rows:
+
+| Row | Change | Retrain? |
+|---|---|---|
+| E1 | heavier objects, m ~ U[0.2, 0.5] kg | no |
+| E2 | slippery objects, mu_s ~ U[0.2, 0.4] | no |
+| E3 | slip-monitor noise 1.5 mm (3x) | no |
+| E4 | weight estimate error +-25% | no |
+| E5 | coarser probe, step 0.8 | no |
+| E6 | finer probe, step 0.95 | no |
+| E7 | lift height 20 cm | no |
+| E8 | softer pads, solref 0.006 | no |
+| E9 | earlier kinetic switch, v_slip 0.005 m/s | no |
+| S1 | shield r_max = 1.0 | no |
+| S2 | shield r_max = 1.1 | no |
+| S3 | shield r_max = 1.4 | no |
+| S4 | slip tolerance 2 mm | no |
+| S5 | slip tolerance 10 mm | no |
+| S6 | no sensing margin (MARGIN = 0) | no |
+| T1 | trained on r = 1.0 only | B2, B5 retrained (5 seeds) |
+| T2 | wider time action (duration scale 1.5) | retrained |
+| T3 | grip weight lambda = 10 | retrained |
+| T4 | double training budget (40 iterations) | retrained |
+
+Metrics per method: failure rate (% of lifts with slip > tolerance, or drop), mean lift time, mean grip F/mg,
+mean episode time. Changes are tested against the reference with a paired bootstrap over the 40 objects
+(10,000 resamples of per-object means over r and seeds); * marks a 95% interval excluding 0.
+
+### A2. Action-space safety map
+Fixed residual actions on a grid a_T in {-1, -0.83, ..., 0} (7 values) x a_F in {-1, -0.75, ..., 1} (9 values),
+40 test objects, r in {1.0, 1.2}, without and with the grip shield. Report failure rate, grip and lift time per cell.
+
+### A3. Bound tightness
+Deliberately under-gripped lifts: grip = model grip x {0.85, 0.88, 0.91, 0.94, 0.97, 1.0}, T in {0.37, 0.5, 1.0} s,
+r in {1.0, 1.1, 1.2}, 40 test objects; Proposition 1 evaluated with r_max = true r. Report predicted vs measured slip.
+
+### A4. Anatomy of failures
+Full-state traces (palm and rod height, relative velocity, friction state, grip, bound) for B2 and B5 on the same
+objects; the object list is every test object where B2 seed 2 fails at r = 1.2 (seed 2 has the most failures).
+
+### A5. Renders and training curves
+MuJoCo renders of one lift per method (illustration only) and the ES training logs already saved.
+
+Code refactor allowed before running: module constants used as default arguments are read at call time instead
+(no change in behaviour; checked by re-running test-set episodes and requiring identical results).
