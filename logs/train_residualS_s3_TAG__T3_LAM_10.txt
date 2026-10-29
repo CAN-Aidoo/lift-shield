@@ -1,0 +1,11 @@
+residualS 3 0 -2.114 -2.156 16
+residualS 3 1 -1.959 -1.996 28
+residualS 3 2 -1.698 -1.725 40
+residualS 3 3 -1.861 -1.877 51
+residualS 3 4 -1.617 -1.637 63
+residualS 3 5 -1.641 -1.649 74
+residualS 3 6 -1.613 -1.62 86
+residualS 3 7 -1.578 -1.585 97
+residualS 3 8 -1.621 -1.622 108
+residualS 3 9 -1.555 -1.557 119
+residualS 3 10 -1.647 -1.649 131

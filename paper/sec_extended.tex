@@ -1,0 +1,72 @@
+\section{Extended Study: What Survives When the Setup Changes?}\label{sec:extended}
+The confirmatory study answers \Q1--\Q4 for one configuration. A reader building on it needs to know which conclusions
+depend on our choices. We therefore ran a controlled study (Fig.~\ref{fig:overview}): starting from the test-set
+configuration, each of 19 rows changes \emph{one} design choice and reruns all six methods on the same 40 objects, four
+values of $r$ and the same episode seeds; four rows retrain the residuals. Figure~\ref{fig:ctrl} reports the change in
+failure rate, grip and episode time for every cell, with a paired bootstrap over objects marking changes whose 95\%
+interval excludes zero (an unpaired bootstrap for E1 and E2, which draw different objects). Table~\ref{tab:changes} in the
+appendix describes each change and Table~\ref{tab:controlled} gives absolute values. The study, and the analyses in
+Sections~\ref{sec:map}--\ref{sec:tight}, were frozen in a protocol addendum before they were run and are exploratory.
+
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{fig_overview.pdf}
+\caption{\textbf{Controlled study overview.} Each row of Fig.~\ref{fig:ctrl} changes a single design choice relative to the
+reference configuration and reruns every method on the same objects and episode seeds. Rows T1--T4 retrain B2 and B5
+(5 seeds each); all other rows reuse the trained weights.}\label{fig:overview}
+\end{figure*}
+
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{fig_ctrl_main.pdf}
+\caption{\textbf{Controlled study.} Each cell is the change from the reference configuration (top row, absolute values),
+with the resulting absolute value in parentheses; * marks a 95\% bootstrap interval that excludes zero. Red is worse
+(more failures, more grip, longer episodes). Failures count lifts that slip more than the row's tolerance or drop the rod,
+over 160 lifts (B0, B0S) or 800 lifts (learned methods, 5 seeds).}\label{fig:ctrl}
+\end{figure*}
+
+\subsection{Findings that hold}
+\finding{The unshielded residual is fragile, and the shield fixes it.} B2's failure rate moved with almost every change:
+from 11.5\% in the reference to 26\% for heavier objects (E1), 30\% with a finer probe (E6), 15\% with softer pads (E8) and
+14\% with a 2\,mm tolerance (S4). In every one of these rows, and in the weight-error and probe-step rows, B4g, B4t and B5
+had zero failures. A finer probe is an instructive case: it brings $\Fs$ closer to the true breakaway grip, which removes
+some of the hidden margin that B2 had learned to spend, so B2 fails more while the shielded methods do not notice.
+
+\finding{The cliff holds.} Setting the shield to $r_{\max}=1.1$ (S2) lowered B5's grip by only 0.19 percentage points of the
+object's weight, and $r_{\max}=1.4$ (S3) changed nothing: once any drop is assumed, the certified grip is the no-onset grip.
+Removing the 1.5\,mm sensing margin (S6) or widening the tolerance to 10\,mm (S5) did not change the shielded grip at all.
+Only $r_{\max}=1.0$ (S1) bought grip, $-7$ to $-9$ points, and it cost 5--7.5\% failures, as in \Q4.
+
+\subsection{Findings that break}
+\finding{A probe that fails gives the shield nothing to certify.} Our probe starts at the grip that would hold the
+estimated weight at $\mu=0.3$. With slippery objects ($\mu_s\in[0.2,0.4]$, E2) the first step already slips for many
+objects; with a noisier slip monitor (1.5\,mm, E3) noise alone exceeds the 2.5\,mm motion threshold on the first step. In
+both cases the probe reports $\Fs=30$\,N, the maximum grip. The shield then certifies nothing: it declined on 68\% (E2) and
+100\% (E3) of lifts and fell back to the slow model lift, at 21 to 31 times the object's weight in grip. This is a safe
+failure, but not a gentle one, and Fig.~\ref{fig:ctrl}a shows why failure rates alone mislead here: B2's failure rate
+\emph{fell} in these rows because it, too, was handed a crushing grip.
+
+\finding{The certificate assumes friction stays static until gross slip, and that assumption can fail.} Two rows broke the
+shield itself. Lifting 20\,cm instead of 10\,cm (E7) doubles the peak acceleration for the same duration; B5 then failed
+38.6\% of lifts and B4g 37.8\%, every one with a certified bound of zero. Switching to kinetic friction at 5\,mm/s instead
+of 2\,cm/s (E9) gave 46.9\% for both. Figure~\ref{fig:e7case} shows the mechanism. The shield sets the grip at the edge of
+onset, where the demand reaches 95\% of the true static capacity at peak acceleration. MuJoCo's soft contact lets the rod
+creep relative to the pads at that load, at 12\,mm/s in E7 and 6.5\,mm/s in the reference; once the creep speed exceeds the
+switching threshold, our emulator drops friction to its kinetic level although Coulomb's law says the rod is stuck, and the
+rod slides. In the reference configuration the creep stayed below the 2\,cm/s threshold by a factor of three; E7 and E9
+remove that factor. The time projection was more robust in E7 (4.1\% failures), because a longer lift lowers the peak
+demand instead of meeting it at the edge.
+
+We do not read this as an artefact to be tuned away. Real contacts also move before they slide: pre-sliding displacement is
+part of every dynamic friction model~\cite{canudas1995,olsson1998}, and whether friction weakens during it is a property of
+the materials. A certificate placed exactly at the onset boundary has no margin for it. \textbf{The practical fix is a
+margin on onset} --- certify $g+a\le(1-\delta)gF/\Fs$ for some $\delta>0$ --- which our zero-margin shield did not have. We
+report this as found rather than adding the fix after seeing the result.
+
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{fig_e7case.pdf}
+\caption{\textbf{When the certificate fails} (row E7, lift height 20\,cm, B5, $r=1.2$). (a) The demand peaks at 95\% of the
+true static capacity, just below the certified level, so Coulomb friction should hold the rod. (b) The soft contact creeps
+at up to 12\,mm/s before peak acceleration; the emulator's kinetic switch fires once the relative speed exceeds 20\,mm/s
+(shaded), and the rod slides. (c) The certified lift ends 6\,mm low.}\label{fig:e7case}
+\end{figure*}
+
+\input{sec_extended_train.tex}

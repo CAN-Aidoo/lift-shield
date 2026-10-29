@@ -37,6 +37,11 @@ SEARCH = 0.9          # probe phase: grip multiplied by this each step until the
 MOVE_THR = 0.0025     # probe phase: slip that counts as "moved" (m)
 T0 = 1.0              # model controller's lift duration (s)
 RMAX = 1.2            # shield's assumed bound on mu_s / mu_k
+V_SLIP, V_STICK = 0.02, 0.002   # stick-slip switching thresholds (m/s)
+M_RANGE, MU_RANGE = (0.05, 0.2), (0.4, 0.8)   # object distribution
+M_ERR = 0.1           # weight-estimate error (fraction)
+LAM = 1.0             # grip weight in the training reward
+LAGFIX = False        # Addendum A6 diagnostic: compare rod and palm velocities from the same step
 
 XML = """
 <mujoco>
@@ -61,10 +66,11 @@ XML = """
 
 
 def sample_object(rng):
-    return dict(m=rng.uniform(0.05, 0.2), mu=rng.uniform(0.4, 0.8))
+    return dict(m=rng.uniform(*M_RANGE), mu=rng.uniform(*MU_RANGE))
 
 
-def minjerk(T, h=H):
+def minjerk(T, h=None):
+    h = H if h is None else h
     """Minimum-jerk lift of height h in time T, sampled at DT: returns (z, a) arrays (relative to start)."""
     n = max(2, int(round(T / DT)))
     s = np.arange(1, n + 1) / n
@@ -73,12 +79,14 @@ def minjerk(T, h=H):
     return z, a
 
 
-def peak_acc(T, h=H):
+def peak_acc(T, h=None):
+    h = H if h is None else h
     return 5.7735 * h / T ** 2     # 10 / sqrt(3) h / T^2
 
 
 class LiftRig:
-    def __init__(self, m, mu, ratio=1.0, v_slip=0.02, v_stick=0.002):
+    def __init__(self, m, mu, ratio=1.0, v_slip=None, v_stick=None):
+        v_slip = V_SLIP if v_slip is None else v_slip; v_stick = V_STICK if v_stick is None else v_stick
         self.model = mujoco.MjModel.from_xml_string(XML.format(m=m, mu=mu))
         self.data = mujoco.MjData(self.model)
         M = self.model
@@ -89,7 +97,7 @@ class LiftRig:
         self._g = [M.geom(g).id for g in ("lpad", "rpad", "rodg")]
         self._rod = M.body("rod").id; self._vel = np.zeros(6)
         self._pq = M.joint("pz").qposadr[0]; self._pv = M.joint("pz").dofadr[0]
-        self.palm_z = 0.5; self.palm_v = 0.0
+        self.palm_z = 0.5; self.palm_v = 0.0; self._palm_v_prev = 0.0
         self.grip = FMAX; self.t_sim = 0.0; self.armed = False
         for j in ("lj", "rj"):
             self.data.qpos[M.joint(j).qposadr[0]] = 0.0262 - 0.01 - 0.006 + 0.0002
@@ -111,7 +119,7 @@ class LiftRig:
         self.data.qpos[self._pq] = self.palm_z - 0.5; self.data.qvel[self._pv] = self.palm_v
         if self.ratio != 1.0 and self.armed:
             mujoco.mj_objectVelocity(self.model, self.data, mujoco.mjtObj.mjOBJ_BODY, self._rod, self._vel, 0)
-            v = abs(self._vel[5] - self.palm_v)
+            v = abs(self._vel[5] - (self._palm_v_prev if LAGFIX else self.palm_v))
             if not self.sliding and v > self.v_slip:
                 self.sliding = True; self.n_breakaway += 1
                 self.model.geom_friction[self._g, 0] = self.mu_k
@@ -120,6 +128,7 @@ class LiftRig:
                 self.model.geom_friction[self._g, 0] = self.mu_s
         mujoco.mj_step(self.model, self.data)
         self.data.qpos[self._pq] = self.palm_z - 0.5; self.data.qvel[self._pv] = self.palm_v
+        self._palm_v_prev = self.palm_v
 
     def step(self, secs, grip=None):
         for _ in range(int(round(secs / DT))):
@@ -169,11 +178,12 @@ def lift_bound(F, T, F_stuck, r_max):
     return x
 
 
-def probe(rig, m_est, rng=None, sig=SIG):
+def probe(rig, m_est, rng=None, sig=None):
     """Search phase with the palm still: step the grip down by SEARCH from the mu = 0.3 grip until the rod moves.
     Each step ramps to the new grip and holds 0.3 s while a slip monitor watches; if slip since the step began
     exceeds MOVE_THR the grip snaps to 2.5x that grip within 20 ms (reactive re-clamp), so a probe never lets the rod run away.
     Returns F_stuck (last grip with no motion; FMAX if the first step moved), F_moved, number of probes."""
+    sig = SIG if sig is None else sig
     F = min(FMAX, m_est * G / (2 * 0.3))
     F_stuck = FMAX; n = 0
     while True:
@@ -248,10 +258,11 @@ class LinearPolicy:
         return np.tanh(self.w @ o)
 
 
-def run_episode(obj, rng, mode="model", policy=None, r_max=RMAX, shield_axis="grip"):
+def run_episode(obj, rng, mode="model", policy=None, r_max=None, shield_axis="grip"):
     """mode: model | modelS | residual | residualS (shield in the loop). Returns a result dict."""
+    r_max = RMAX if r_max is None else r_max
     rig = LiftRig(obj["m"], obj["mu"], ratio=obj.get("ratio", 1.0))
-    m_est = obj["m"] * rng.uniform(0.9, 1.1)                 # weight from wrist sensing, +-10%
+    m_est = obj["m"] * rng.uniform(1 - M_ERR, 1 + M_ERR)     # weight from wrist sensing, +-10%
     F_stuck, F_moved, n_probe = probe(rig, m_est, rng)
     t_probe = rig.t_sim
     T_m = T0; F_m = model_grip(F_stuck, T_m)
@@ -285,7 +296,8 @@ def run_episode(obj, rng, mode="model", policy=None, r_max=RMAX, shield_axis="gr
                 exceed=bool(slip > bound), n_breakaway=rig.n_breakaway)
 
 
-def score(res, lam=1.0):
+def score(res, lam=None):
+    lam = LAM if lam is None else lam
     """Training reward: failure (drop or slip > S_TOL) costs 10; otherwise faster and gentler is better.
     Lift time in units of T0, grip in units of the object's weight m g."""
     if not res["ok"]:

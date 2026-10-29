@@ -1,8 +1,12 @@
 """Antithetic ES for the lift residual (settings as Paper 5). Usage: python train_es.py MODE SEED  (MODE residual|residualS)"""
 import sys, os, json, time, pickle, numpy as np
+import lift_env as L
 from lift_env import run_episode, sample_object, score, LinearPolicy, OBS_DIM
 
-POP_PAIRS = 6; N_OBJ = 6; SIGMA = 0.1; LR = 0.06; ITERS = 20
+POP_PAIRS = 6; N_OBJ = 6; SIGMA = 0.1; LR = 0.06
+# Addendum A, T1-T4 overrides (defaults reproduce the main training exactly)
+ITERS = int(os.environ.get("ITERS", 20)); R_HI = float(os.environ.get("R_HI", 1.2)); TAG = os.environ.get("TAG", "")
+L.ST = float(os.environ.get("ST", L.ST)); L.LAM = float(os.environ.get("LAM", L.LAM))
 
 
 def evaluate(mode, w, objs, seeds):
@@ -16,7 +20,7 @@ def main():
     rng = np.random.default_rng(seed)
     w = np.zeros(2 * OBS_DIM); m = np.zeros_like(w); v = np.zeros_like(w); log = []; t0 = time.time()
     for it in range(ITERS):
-        objs = [dict(sample_object(rng), ratio=float(rng.uniform(1.0, 1.2))) for _ in range(N_OBJ)]
+        objs = [dict(sample_object(rng), ratio=float(rng.uniform(1.0, R_HI))) for _ in range(N_OBJ)]
         seeds = [int(x) for x in rng.integers(0, 2**31, N_OBJ)]
         eps = rng.normal(size=(POP_PAIRS, w.size))
         fp = np.array([evaluate(mode, w + SIGMA * e, objs, seeds) for e in eps])
@@ -29,8 +33,8 @@ def main():
         log.append(dict(it=it, f_center=f0, f_mean=float(allf.mean()), episodes=(it + 1) * (2 * POP_PAIRS + 1) * N_OBJ,
                         wall=time.time() - t0))
         print(mode, seed, it, round(f0, 3), round(float(allf.mean()), 3), round(time.time() - t0), flush=True)
-    np.save(f"weights/w_{mode}_s{seed}.npy", w)
-    json.dump(log, open(f"weights/log_{mode}_s{seed}.json", "w"), indent=1)
+    np.save(f"weights/w_{mode}_s{seed}{TAG}.npy", w)
+    json.dump(log, open(f"weights/log_{mode}_s{seed}{TAG}.json", "w"), indent=1)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,91 @@
+\section{Results}\label{sec:results}
+\begin{table}[t]\centering\footnotesize
+\caption{\textbf{Main results, test set} ($r_{\max}=1.2$). Lift time and grip are means over all lifts and do not depend on
+$r$; failures are lifts with slip $>5$\,mm out of 200 (40 for B0, B0S). No failure was a drop. Full statistics:
+Table~\ref{tab:perr}.}\label{tab:main}
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{@{}lccccccc@{}}\toprule
+ & $T$ (s) & $F/mg$ & \multicolumn{4}{c}{failures at $r=$} & max slip\\
+ & & & 1.0 & 1.1 & 1.2 & 1.3 & (mm)\\\midrule
+B0 model & 1.000 & 1.009 & 0 & 0 & 0 & 0 & 0.49\\
+B0S model + shield & 1.000 & 1.009 & 0 & 0 & 0 & 0 & 0.49\\
+B2 residual & 0.372 & 1.276 & 3 & 25 & 32 & 32 & 56.0\\
+B4g B2 + grip shield & 0.372 & 1.358 & 0 & 0 & 0 & 0 & 0.12\\
+B4t B2 + time shield & 0.420 & 1.276 & 0 & 0 & 0 & 0 & 0.14\\
+B5 trained with shield & 0.370 & 1.361 & 0 & 0 & 0 & 0 & 0.11\\\bottomrule
+\end{tabular}\end{table}
+
+\subsection{\Q1: How much faster, and at what grip?}
+\finding{Every residual variant lifts 2.7$\times$ faster than the model.} B5 cut the lift time by 0.630\,s (95\% CI
+0.629--0.630; Holm-corrected Wilcoxon $p<10^{-10}$ at every $r$), from 1.00\,s to 0.37\,s (Table~\ref{tab:main}). All ten
+trained policies ended at the same corner of the action space, $a_T\approx-1$ (Table~\ref{tab:perseed}), so the speed gain
+is set by our action range, not by the physics; Section~\ref{sec:extended} widens the range.
+
+\finding{Faster lifts need more grip.} Peak acceleration grows as $1/T^2$, so the model's own grip for a 0.37\,s lift is
+35\% higher than for a 1\,s lift. B5 gripped $0.352\,mg$ harder than B0 (CI 0.330--0.374). The unshielded residual gripped
+less, $+0.267\,mg$ (CI 0.237--0.304), because it set its grip on average 6\% below the model's grip for its own lift time
+(range $-11$\% to $+3$\% across lifts; the five seeds chose $\bar a_F$ between $-0.24$ and $-0.38$).
+
+\finding{The lift is a small part of an episode.} The probe took a median of 4.1\,s (7.5 probe steps, range 4--11), so the
+0.63\,s saved shortens a whole episode by about 10\%. A faster probe is a larger opportunity than a faster lift.
+
+\subsection{\Q2: Does the residual stay safe as friction drops?}
+\finding{No.} B2's grip cut is nearly harmless without a friction drop: 3 of 200 lifts failed at $r=1$, because the
+quasi-static model over-predicts the grip needed for short lifts by about 8\% (Table~\ref{tab:val}) and $\Fs$ adds more
+margin. Once the rod does start to slide, kinetic friction is too low to stop it. Failures rose to 25, 32 and 32 of 200 at
+$r=1.1$, 1.2 and 1.3, with slips up to 56\,mm. Per object, B2 failed at least once on 14 objects where the model never
+failed at $r=1.1$, and on 16 at $r=1.2$ and 1.3, never the reverse (Holm-corrected McNemar $p=0.001$ and $p=0.0004$). The
+seeds cut differently: at $r=1.2$ the five B2 policies failed 2, 6, 14, 2 and 8 times in 40 lifts. Every shielded method
+had zero failures at every $r$.
+
+\finding{The failure has one mechanism.} Figure~\ref{fig:anatomy} traces one failure. At 0.03\,s, well before peak acceleration, the demand
+$g+a$ exceeds the static capacity and the rod starts to creep; at 0.09\,s its speed relative to the fingers passes the
+2\,cm/s switching threshold, friction drops to its kinetic level, which lies well below the demand, and the rod slides at
+up to 0.2\,m/s for 0.17\,s, coming to rest 21\,mm lower only once the palm decelerates. All 14 failures of the worst seed follow the same pattern (Fig.~\ref{fig:gallery}
+in the appendix), with final slips of 9 to 25\,mm. With a certified grip, the same lift shows only an elastic oscillation
+of $\pm6$\,mm/s and at most 0.8\,mm of transient displacement.
+
+\begin{figure*}[t]\centering
+\includegraphics[width=\textwidth]{fig_anatomy.pdf}
+\caption{\textbf{Anatomy of a failure} (object 2, $r=1.2$, seed 2). Top: demand $g+a(t)$ against the static, kinetic and
+certified capacities for the grip each policy chose. Middle: speed of the fingers relative to the rod, with kinetic friction
+active shaded. Bottom: slip. Left, B2: the demand crosses the static capacity at 0.03\,s; the rod breaks away at 0.09\,s,
+kinetic friction persists for 0.17\,s, and slip ends at 21\,mm. Right, B5: the certified grip keeps the demand below the static capacity
+throughout; the residual motion is elastic and returns to zero.}\label{fig:anatomy}
+\end{figure*}
+
+\finding{The result replicates.} On the confirmation set, run once on 40 fresh objects with $r\sim U[1.0,1.3]$, B2 failed
+35 of 200 lifts (1, 16 and 18 in the bands $(1,1.1]$, $(1.1,1.2]$ and $(1.2,1.3]$; 15 objects worse than the model, none
+better, $p=6\times10^{-5}$), while B4g and B5 failed none at the same speed (0.371\,s and 0.370\,s) and the same extra grip
+($+0.32\,mg$) as on the test set (Table~\ref{tab:confirm}).
+
+\subsection{\Q3: Raise the grip, or slow the lift?}
+Applied to the same B2 commands, both projections intervened on 95.5\% of lifts and removed every failure
+(Table~\ref{tab:main}). \textbf{The grip projection keeps the speed; the time projection keeps the grip.} Grip projection
+added 6.4\% grip ($1.358$ vs $1.276\,mg$) at unchanged lift time; time projection kept B2's grip and slowed the lift by
+13\% (0.420 vs 0.372\,s). Under our reward, which values one second of lift time like ten object-weights of grip, grip
+projection is better. Training with the shield in the loop (B5) gave the same result as adding it at test time (B4g):
+0.370 vs 0.372\,s and 1.361 vs 1.358\,$mg$. The shield never declined: a certified command always existed within
+30\,N or 2\,s.
+
+\subsection{\Q4: Does the certificate hold, and what does a slip allowance buy?}\label{sec:q4}
+\finding{The certificate held wherever its assumption did.} Every certified lift at $r_{\max}=1.2$ had a bound of exactly
+zero: the shield placed the grip where slip cannot start. Measured slip was 0.05--0.49\,mm, which is the elastic creep of
+Table~\ref{tab:val}, not friction slip. Because any creep exceeds a zero bound, the pre-registered ``exceedance'' rate is
+100\% (deviation D1), but the largest excess is a third of the 1.5\,mm margin and no certified lift came within 4.5\,mm of
+the tolerance: 0 of 2{,}560 lifts at $r_{\max}=1.2$, including 640 at $r=1.3>r_{\max}$, and 0 of 960 at $r_{\max}=1.4$
+(Table~\ref{tab:rmax}). Lifts beyond $r_{\max}$ were safe for a simple reason: slip never started, so the kinetic level never
+mattered.
+
+\finding{Assuming friction does not drop is not safe.} With $r_{\max}=1.0$ the shield let B5 grip 6.4\% less
+($1.274\,mg$), and 60 of its 600 lifts at $r>1$ slipped more than 5\,mm (10, 25 and 25 at $r=1.1$, 1.2, 1.3; worst excess
+over the bound 18\,mm), against 0 of 200 at $r=1$.
+
+\finding{A slip allowance is worth little once friction may drop.} Figure~\ref{fig:teaser}d and Fig.~\ref{fig:bound} explain
+why. Allowing 3.5\,mm of slip saves 6.4\% grip if friction does not drop, 4.6\% if it may drop by 2\%, 2.3\% at 5\%,
+0.15\% at 10\% and nothing from 15\%. Allowing 10\,mm saves nothing from $r_{\max}=1.2$. Once slip starts, the kinetic
+deficit $(g+a)(1-1/r_{\max})$ acts until the palm decelerates, so the certified slip is either zero or large. The ratio of
+the certified grip to the no-onset grip was identical for all 40 test objects, because it depends only on $r_{\max}$ and
+$T$ (Appendix~\ref{app:cliff}).
+
+\input{sec_extended.tex}

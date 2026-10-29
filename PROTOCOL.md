@@ -166,3 +166,11 @@ MuJoCo renders of one lift per method (illustration only) and the ES training lo
 
 Code refactor allowed before running: module constants used as default arguments are read at call time instead
 (no change in behaviour; checked by re-running test-set episodes and requiring identical results).
+
+### A6. Diagnostic rows (added 29 Oct 2026, after rows E7 and E9 were seen, before running these)
+Rows E7 and E9 produced failures of certified lifts. Traces show the emulator's kinetic switch fired at a true relative
+speed of 12 mm/s: the switch compares the rod's velocity from the previous step with the palm's commanded velocity for
+the current step, which adds a*dt (about 8 mm/s at E7's peak acceleration) to the measured relative speed. This lag is part
+of the frozen rig and is kept for every other result; in the reference configuration it never caused a switch during a
+shielded lift (0 of 2,560). Diagnostic rows E7L and E9L repeat E7 and E9 with the lag removed (palm velocity from the same
+step as the rod velocity). They are reported next to E7 and E9, not instead of them.

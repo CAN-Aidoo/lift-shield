@@ -1,0 +1,38 @@
+\begin{table*}[t]\centering\footnotesize
+\caption{\textbf{Test set, every method at every $r$} ($r_{\max}=1.2$). Failure counts with Wilson 95\% intervals (\%);
+$\Delta T$ and $\Delta F/mg$ against B0 with hierarchical bootstrap 95\% intervals (seeds, then objects); ``obj.\ worse'' counts
+objects that failed at least once under the method but never under B0, with the Holm-corrected exact McNemar $p$ (B0S and B4t are
+outside the pre-registered Holm families and show the raw $p$). All lift-time and grip differences have Holm-corrected Wilcoxon
+$p<10^{-10}$.}\label{tab:perr}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrllrrr@{}}\toprule
+Method & failures & Wilson CI (\%) & $\Delta T$ (s) & $\Delta F/mg$ & obj.\ worse & $p$ & max slip (mm)\\\midrule
+\multicolumn{8}{@{}l}{\textit{$r=1.0$}}\\
+B0 & 0/40 & [0.0, 8.8] & --{\scriptsize} & --{\scriptsize} & -- & -- & 0.49\\
+B0S & 0/40 & [0.0, 8.8] & +0.000{\scriptsize} & +0.000{\scriptsize} & 0 & 1 & 0.49\\
+B2 & 3/200 & [0.5, 4.3] & -0.628{\scriptsize [-0.629, -0.627]} & +0.267{\scriptsize [+0.237, +0.304]} & 2 & 1 & 8.59\\
+B4g & 0/200 & [0.0, 1.9] & -0.628{\scriptsize [-0.629, -0.627]} & +0.350{\scriptsize [+0.328, +0.372]} & 0 & 1 & 0.12\\
+B4t & 0/200 & [0.0, 1.9] & -0.581{\scriptsize [-0.597, -0.566]} & +0.267{\scriptsize [+0.237, +0.303]} & 0 & 1 & 0.14\\
+B5 & 0/200 & [0.0, 1.9] & -0.630{\scriptsize [-0.630, -0.629]} & +0.352{\scriptsize [+0.330, +0.374]} & 0 & 1 & 0.11\\
+\multicolumn{8}{@{}l}{\textit{$r=1.1$}}\\
+B0 & 0/40 & [0.0, 8.8] & --{\scriptsize} & --{\scriptsize} & -- & -- & 0.49\\
+B0S & 0/40 & [0.0, 8.8] & +0.000{\scriptsize} & +0.000{\scriptsize} & 0 & 1 & 0.49\\
+B2 & 25/200 & [8.6, 17.8] & -0.628{\scriptsize [-0.629, -0.627]} & +0.267{\scriptsize [+0.237, +0.304]} & 14 & 0.001 & 20.24\\
+B4g & 0/200 & [0.0, 1.9] & -0.628{\scriptsize [-0.629, -0.627]} & +0.350{\scriptsize [+0.328, +0.372]} & 0 & 1 & 0.12\\
+B4t & 0/200 & [0.0, 1.9] & -0.581{\scriptsize [-0.596, -0.566]} & +0.267{\scriptsize [+0.237, +0.303]} & 0 & 1 & 0.14\\
+B5 & 0/200 & [0.0, 1.9] & -0.630{\scriptsize [-0.630, -0.629]} & +0.352{\scriptsize [+0.330, +0.375]} & 0 & 1 & 0.11\\
+\multicolumn{8}{@{}l}{\textit{$r=1.2$}}\\
+B0 & 0/40 & [0.0, 8.8] & --{\scriptsize} & --{\scriptsize} & -- & -- & 0.49\\
+B0S & 0/40 & [0.0, 8.8] & +0.000{\scriptsize} & +0.000{\scriptsize} & 0 & 1 & 0.49\\
+B2 & 32/200 & [11.6, 21.7] & -0.628{\scriptsize [-0.629, -0.627]} & +0.267{\scriptsize [+0.237, +0.304]} & 16 & 0.0004 & 36.12\\
+B4g & 0/200 & [0.0, 1.9] & -0.628{\scriptsize [-0.629, -0.627]} & +0.350{\scriptsize [+0.328, +0.372]} & 0 & 1 & 0.12\\
+B4t & 0/200 & [0.0, 1.9] & -0.581{\scriptsize [-0.597, -0.566]} & +0.267{\scriptsize [+0.237, +0.303]} & 0 & 1 & 0.14\\
+B5 & 0/200 & [0.0, 1.9] & -0.630{\scriptsize [-0.630, -0.629]} & +0.352{\scriptsize [+0.330, +0.374]} & 0 & 1 & 0.11\\
+\multicolumn{8}{@{}l}{\textit{$r=1.3$}}\\
+B0 & 0/40 & [0.0, 8.8] & --{\scriptsize} & --{\scriptsize} & -- & -- & 0.49\\
+B0S & 0/40 & [0.0, 8.8] & +0.000{\scriptsize} & +0.000{\scriptsize} & 0 & 1 & 0.49\\
+B2 & 32/200 & [11.6, 21.7] & -0.628{\scriptsize [-0.629, -0.627]} & +0.267{\scriptsize [+0.238, +0.304]} & 16 & 0.0004 & 56.02\\
+B4g & 0/200 & [0.0, 1.9] & -0.628{\scriptsize [-0.629, -0.627]} & +0.350{\scriptsize [+0.328, +0.372]} & 0 & 1 & 0.12\\
+B4t & 0/200 & [0.0, 1.9] & -0.581{\scriptsize [-0.596, -0.566]} & +0.267{\scriptsize [+0.237, +0.303]} & 0 & 1 & 0.14\\
+B5 & 0/200 & [0.0, 1.9] & -0.630{\scriptsize [-0.630, -0.629]} & +0.352{\scriptsize [+0.330, +0.374]} & 0 & 1 & 0.11\\
+\bottomrule\end{tabular}\end{table*}

@@ -1,0 +1,15 @@
+E1 heavier objects 0.2-0.5 kg 3520
+E2 slippery objects mu 0.2-0.4 3520
+E3 slip-monitor noise 1.5 mm 3520
+E4 weight error +-25% 3520
+E5 coarser probe step 0.8 3520
+E6 finer probe step 0.95 3520
+E7 lift height 20 cm 3520
+E8 softer pads solref 0.006 3520
+E9 earlier kinetic switch 5 mm/s 3520
+S1 shield r_max = 1.0 3520
+S2 shield r_max = 1.1 3520
+S3 shield r_max = 1.4 3520
+S4 slip tolerance 2 mm 3520
+S5 slip tolerance 10 mm 3520
+S6 no sensing margin 3520

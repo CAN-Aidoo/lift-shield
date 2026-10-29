@@ -1,0 +1,93 @@
+\begin{abstract}
+\noindent A robot gripper lifting an unfamiliar object must decide how hard to squeeze and how fast to move. Squeezing
+less and moving faster are both attractive, and a few millimetres of slip in the fingers is often harmless. This
+suggests letting a learned policy trade a little slip for a lighter, faster lift, protected by a certificate that the
+slip stays small. So, is a little slip worth it? Mostly not. We study the question in MuJoCo simulation with explicit
+stick--slip friction, where friction drops from its static to its kinetic level once an object starts to slide. We derive
+a closed-form bound on slip during a minimum-jerk lift from a probed breakaway grip and an assumed bound $r_{\max}$ on
+the static-to-kinetic ratio, and use it as a shield that raises the grip or slows the lift until the bound is at most
+3.5\,mm. In a pre-registered study, a linear residual policy trained with evolution strategies cut lift time from
+1.00\,s to 0.37\,s against a friction-model controller. Without the shield it learned to grip 6\% below the model,
+exploiting the model's conservatism at short lift times, and 12--16\% of its lifts slipped more than 5\,mm once friction
+could drop; with the shield, at training or only at test time, none of 3{,}520 certified lifts did, at a cost of 6\%
+more grip and no speed, and the results replicated on fresh objects. The certificate holds because the shield ends up
+forbidding slip altogether: when friction may drop by 10\% or more, allowing even 10\,mm of slip saves no grip. A
+controlled study that changes one design choice at a time (19 changes, 6 methods) shows which conclusions survive
+heavier and more slippery objects, worse sensing, softer pads and different training choices.
+\end{abstract}
+
+\section{Introduction}
+People lift objects with a grip only modestly above the force at which they would slip, scale that grip to the friction
+they feel, and correct it reflexively when the object starts to slip~\cite{johansson1984}. Robot grippers usually do the
+opposite. Because an object's weight and friction are unknown and a dropped object is costly, they squeeze hard and move
+slowly. Light grips matter for fragile, deformable or food items; fast lifts matter for throughput. Tactile slip
+detection and grip stabilisation~\cite{veiga2020,romeo2020,su2015,yuan2015} make light grips safer by reacting when slip
+starts, but reaction comes after the fact, and a reflex cannot undo slip that has already happened.
+
+A second idea is to plan the lift so that slip is bounded in advance. A friction model predicts the grip needed to hold an
+object during a known acceleration profile, and a learned policy can adjust the model's choice where the model is
+conservative or wrong. This is \emph{residual learning}~\cite{johannink2019,silver2018}. The risk is that a learned
+correction pushes the system exactly where the model is least reliable. In earlier work on in-hand
+pivoting~\cite{aidoo2026b} we found that this happens at \emph{breakaway}: when a grasped object starts to slide, friction
+falls from its static to its kinetic level~\cite{rabinowicz1951,armstrong1994}, and a quasi-static model that ignores the
+drop under-predicts how far the object travels. Physics \emph{shields}~\cite{alshiekh2018}, which project a learned action
+onto a set certified by a friction model, prevented this in pivoting and in controlled sliding~\cite{aidoo2026c}.
+
+Lifting is the most common grasp task and the natural next test, and it raises a question the earlier tasks did not. If a
+few millimetres of slip are acceptable, a certificate need not forbid slip; it only needs to bound it. Can a policy then
+deliberately allow some slip and gain a lighter or faster lift, with a guarantee that the slip stays small? We answer this
+in simulation, in a study whose protocol was committed before any policy was trained (Fig.~\ref{fig:teaser}).
+
+Our answer is a qualified no. A learned residual does lift 2.7$\times$ faster than a friction-model controller. Left
+unshielded, it also learns to grip 6\% below the model, which is safe only as long as friction does not drop; with a drop,
+12--16\% of its lifts slip by 5 to 56\,mm. A slip bound used as a shield removes every one of these failures at the cost of
+6\% more grip and no speed. But the shield's slip allowance turns out to be almost worthless: the bound behaves like a
+cliff, because once the object starts to slide the kinetic deficit persists for the rest of the acceleration phase. For any
+assumed drop of 10\% or more, the only certified lifts are those in which slip never starts, and a 10\,mm allowance buys no
+grip at all. \textbf{The practical lesson is that ``a little slip'' is cheap to tolerate but expensive to certify: unless
+friction is known not to drop, plan lifts in which slip does not start.}
+
+\finding{Contributions.}
+\begin{itemize}
+\item A \textbf{\emph{closed-form slip bound for lifting}} (Proposition~\ref{prop:lift}) that needs only a probed breakaway grip
+and an assumed bound $r_{\max}$ on $\mu_s/\mu_k$, used as a shield with two projection axes: raise the grip or slow the lift.
+\item A \textbf{\emph{pre-registered simulation study}} (\Q1--\Q4, with a confirmation set run once) showing that an unshielded
+residual learns to exploit the quasi-static model's conservatism, that this fails once friction can drop, and that the
+shield removes every failure, with the certificate checked on 4{,}480 shielded lifts including lifts beyond $r_{\max}$.
+\item An \textbf{\emph{analysis of why slip allowances are worth little}}: the bound is a cliff in the assumed friction drop,
+quantified analytically, on an action-space safety map and in failure traces.
+\item A \textbf{\emph{controlled one-change-at-a-time study}} (19 changes $\times$ 6 methods, frozen before it was run) of the
+environment, sensing, shield settings and training choices, with all code, data and per-episode results released.
+\end{itemize}
+
+\section{Related Work}
+\finding{Grip force during lifting.} Johansson and Westling showed that humans set grip force in proportion to load force,
+with a safety margin adapted to the friction of the contact, and that local slips trigger fast grip increases~\cite{johansson1984}.
+Robotic counterparts estimate friction or detect incipient slip with tactile sensors and raise the grip in
+response~\cite{su2015,yuan2015,veiga2020}; Romeo and Zollo survey slip-detection methods and sensors~\cite{romeo2020}. These
+approaches are reactive. We instead choose the grip and the motion \emph{before} the lift, so that slip is bounded in
+advance, using only a probe of the breakaway grip; a reactive layer could sit on top.
+
+\finding{Friction and stick--slip.} The difference between static and kinetic friction has been measured for
+decades~\cite{rabinowicz1951} and is central to models used in control, from Coulomb with a Stribeck drop to dynamic models
+such as LuGre~\cite{armstrong1994,canudas1995,olsson1998}. Soft fingers add load-dependent friction and torsional
+effects~\cite{xydas1999,howe1996}. Physics engines approximate this behaviour: MuJoCo uses a convex, regularised contact
+model with a single friction coefficient~\cite{todorov2012}, and Kolbert et al.\ found that simulated in-hand pivoting
+diverged from measurements~\cite{kolbert2016}. Following our earlier work~\cite{aidoo2026c}, we emulate the static-to-kinetic
+drop by switching the friction coefficient on the relative sliding speed, and we validate the resulting rig against the
+quasi-static model before training anything (Section~\ref{sec:testbed}).
+
+\finding{Residual learning and safe learning.} Residual policies learn corrections on top of a controller
+\cite{johannink2019,silver2018}. Safe reinforcement learning restricts what a learner may do~\cite{garcia2015,brunke2022}:
+shields override unsafe actions using a model~\cite{alshiekh2018}; control-barrier-function filters~\cite{ames2019},
+reachability analysis~\cite{fisac2019} and predictive safety filters~\cite{wabersich2021} generalise the idea. Our shield
+is a one-dimensional projection derived from contact mechanics. Its novelty is not the projection but what the
+certificate rests on: the static-to-kinetic transition during a commanded acceleration profile, which a single-$\mu$
+Coulomb model, as used by rollout-based friction safety filters~\cite{johansson2025}, cannot express.
+
+\finding{Trajectories, learning and evaluation.} We lift along a minimum-jerk profile~\cite{flash1985}, which fixes the peak
+acceleration for a given duration. Policies are linear and trained with antithetic evolution strategies~\cite{salimans2017,mania2018}
+and Adam~\cite{kingma2015}. Our evaluation follows recommendations for reliable RL reporting~\cite{henderson2018,agarwal2021}:
+multiple seeds, per-object paired tests and interval estimates, with the protocol committed before training~\cite{nosek2018}.
+Our audit of 2026 real-robot evaluations motivates reporting failure counts with intervals rather than success rates
+alone~\cite{aidoo2026d}.

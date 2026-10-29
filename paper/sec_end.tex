@@ -1,0 +1,62 @@
+\section{Discussion}\label{sec:discussion}
+\finding{Residuals find the model's margin, including the part that is not theirs to spend.} The unshielded policy did
+exactly what its reward asked: it found that the friction model over-predicts the grip needed for a fast lift and spent
+that margin. Nothing in its training signal distinguished the margin that comes from quasi-static conservatism, which is
+real, from the margin that protects against a friction drop, which is needed only when the drop occurs. With $r$ drawn from
+$[1,1.2]$ during training, the cut paid off on most batches and failed on a few (Fig.~\ref{fig:training}). We expect the
+same pattern wherever a learned correction sits on a conservative model of a contact transition: the conservatism is
+visible in the average reward, the transition only in the tail.
+
+\finding{Certify onset, not slip.} The shield removed every failure and cost 6\% grip. But it did so by forbidding slip,
+not by bounding it: every certified lift had a bound of zero. Section~\ref{sec:q4} and Appendix~\ref{app:cliff} show why
+this is not an accident of our tolerances. With any friction drop, the kinetic deficit outlasts the moment of onset, so
+the certified slip jumps from zero to centimetres. For lifting, a useful certificate is therefore one about \emph{onset}:
+$g+a(t)\le gF/\Fs$ throughout the profile. It is simple, it needs no $r_{\max}$ at all, and our results suggest it gives up
+almost nothing relative to the full slip bound once $r_{\max}\ge1.1$. A slip allowance becomes valuable only when the
+friction drop is known to be small, for example on materials whose static and kinetic coefficients are measured to be
+close.
+
+\finding{Grip or time.} When the shield must act, raising the grip kept the speed and slowing the lift kept the grip. Which
+is better depends on the application: for fragile objects the time projection is the natural choice, for throughput the
+grip projection. Both remove failures; neither declined in our study.
+
+\finding{Where the time goes.} The lift is a small part of an episode. Halving the probe time would save more than the
+learned lift does. Probes that use the lift itself, for example a slow initial acceleration that doubles as a breakaway test,
+are a promising direction.
+
+\section{Limitations}\label{sec:lim}
+\finding{Simulation only.} All results are from MuJoCo with an emulated stick--slip transition. Real contacts show
+rate-dependent friction, pre-sliding displacement, load-dependent soft-finger friction and wear~\cite{canudas1995,xydas1999};
+our switching thresholds were tuned in development. The certificate assumes that $\Fs$ bounds the breakaway grip during the
+lift, which held here because the quasi-static model was conservative for fast lifts (Table~\ref{tab:val}); on hardware this
+must be measured. Domain randomisation~\cite{tobin2017,peng2018} over friction models would be a natural first step before
+hardware.
+\finding{Narrow task.} The rod is a rigid box constrained to slide axially, held at its centre of mass by two pads. Rotational
+slip, off-centre grasps, deformable objects and multi-finger hands are outside this study.
+\finding{Policy class and budget.} Policies are linear and were trained for 1{,}560 episodes; all of them saturated the duration
+action. Richer policies or longer training (Section~\ref{sec:extended}) might find different trade-offs.
+\finding{Deviations.} The pre-registered exceedance metric counts elastic creep (D1); the confirmation set was analysed
+pooled (D2); the slip-allowance analysis (D3) and the whole extended study are exploratory. Appendix~\ref{app:protocol} lists
+them.
+
+\section{Conclusion}
+We asked whether a learned lifting policy should be allowed to trade a little slip for a lighter, faster lift. A residual
+policy on a friction-model controller lifted 2.7 times faster; left unshielded, it also learned to spend a safety margin it
+could not see, and failed whenever friction dropped. A closed-form slip bound used as a shield removed every failure in
+simulation at 6\% extra grip and no loss of speed, even beyond its assumed friction drop, and the results replicated on
+fresh objects. The slip allowance itself turned out to be worth little: once friction may drop by 10\% or more, the only
+certifiable lifts are those in which slip never starts. Our recommendation for practice is to certify onset and to spend
+learning effort on faster probing. The next step is to measure the probe, the bound and the friction drop on hardware.
+
+\section*{Broader Impact}
+This work aims to make robot grasping gentler and safer. Its main risk is over-trust: a certificate proved in simulation, or
+under an assumed friction drop, can fail on real objects, as our own $r_{\max}=1.0$ results show. We report the conditions
+under which the certificate held and failed so that it is not applied beyond them.
+
+\section*{Data Availability}
+Code, the frozen protocol with its addendum and deviations, trained weights, per-episode results and the scripts behind every
+number and figure: \url{https://github.com/CAN-Aidoo/lift-shield}.
+
+\section*{Use of AI Tools}
+Code, analysis and drafting were carried out with the assistance of an AI model (Claude, Anthropic) under the author's
+direction. The author takes responsibility for the content.

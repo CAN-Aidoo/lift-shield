@@ -1,0 +1,18 @@
+<mujoco>
+  <option timestep="0.001" integrator="implicitfast" cone="elliptic" impratio="10" noslip_iterations="20" gravity="0 0 -9.81"/>
+  <worldbody>
+    <body name="palm" pos="0 0 0.5" gravcomp="1"><joint name="pz" type="slide" axis="0 0 1" damping="0"/><geom name="palmg" type="box" size="0.002 0.002 0.002" mass="1000" contype="0" conaffinity="0"/>
+      <body name="lf"><joint name="lj" type="slide" axis="1 0 0" damping="300" range="0 0.03" limited="true"/>
+        <geom name="lpad" type="sphere" size="0.006" pos="-0.0262 0 0" mass="0.02" condim="4" friction="{mu} 0.005 0.0001" solref="0.003 1" solimp="0.95 0.99 0.0005"/></body>
+      <body name="rf"><joint name="rj" type="slide" axis="-1 0 0" damping="300" range="0 0.03" limited="true"/>
+        <geom name="rpad" type="sphere" size="0.006" pos="0.0262 0 0" mass="0.02" condim="4" friction="{mu} 0.005 0.0001" solref="0.003 1" solimp="0.95 0.99 0.0005"/></body>
+    </body>
+    <body name="rod" pos="0 0 0.5"><joint name="rz" type="slide" axis="0 0 1"/>
+      <geom name="rodg" type="box" size="0.01 0.01 0.08" mass="{m}" condim="4" friction="{mu} 0.005 0.0001" solref="0.003 1" solimp="0.95 0.99 0.0005"/>
+    </body>
+  </worldbody>
+  <actuator>
+    <motor name="lgrip" joint="lj" gear="1" ctrlrange="0 40"/>
+    <motor name="rgrip" joint="rj" gear="1" ctrlrange="0 40"/>
+  </actuator>
+</mujoco>
