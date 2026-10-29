@@ -132,7 +132,7 @@ def allow():
     rms = (1.0, 1.02, 1.05, 1.1, 1.15, 1.2, 1.3); lines = []
     for T in (0.37, 0.5, 1.0):
         for sl in (3.5, 10, 30):
-            vals = " & ".join(f"{100*(1-shield_grip(0.1, T, 1.0, rm, sl/1000)/model_grip(1.0, T)):.2f}" for rm in rms)
+            vals = " & ".join(f"{max(0.0, 100*(1-shield_grip(0.1, T, 1.0, rm, sl/1000)/model_grip(1.0, T))):.2f}" for rm in rms)
             lines.append(f"{T:.2f} & {sl:g} & {vals}\\\\")
     return (r"""\begin{tabular}{@{}cc""" + "r" * len(rms) + r"""@{}}\toprule
 $T$ (s) & allowance (mm) & """ + " & ".join(f"$r_{{\\max}}={rm}$" for rm in rms) + r"""\\\midrule

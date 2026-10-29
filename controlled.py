@@ -63,7 +63,7 @@ def objects(row):
 def main():
     rows = sys.argv[1:]
     if rows == ["ALL_ENV"]: rows = [r for r in ROWS if r[0] in "ES" and not r.endswith("L")]
-    if rows == ["ALL_TRAIN"]: rows = [r for r in ROWS if r[0] == "T"]
+    if rows == ["ALL_TRAIN"]: rows = [r for r in ROWS if r[0] == "T" and not r.endswith("L")]
     os.makedirs("results/controlled", exist_ok=True)
     for row in rows:
         objs = objects(row)

@@ -2,8 +2,8 @@
 \caption{\textbf{Controlled changes.} Each row modifies a single design choice relative to the reference configuration
 (test set: 40 objects, $r\in\{1.0,1.1,1.2,1.3\}$, $r_{\max}=1.2$, tolerance 5\,mm, margin 1.5\,mm, probe step 0.9,
 slip-monitor noise 0.5\,mm, weight error $\pm10$\%, lift height 10\,cm, pad stiffness solref 0.003, kinetic switch at
-2\,cm/s, training on $r\in[1,1.2]$ for 20 iterations with $\lambda=1$). Rows E7L, E9L and R0L are diagnostics added after
-E7 and E9 were seen and frozen before they were run (Addendum A6).}\label{tab:changes}
+2\,cm/s, training on $r\in[1,1.2]$ for 20 iterations with $\lambda=1$). Rows R0L, E7L, E9L and T2L are diagnostics added after
+E7, E9 and T2 were seen and frozen before they were run (Addendum A6).}\label{tab:changes}
 \begin{tabular}{@{}lllc@{}}\toprule
 Row & Change & What is modified & Retrained\\\midrule
 \multicolumn{4}{@{}l}{\textit{Environment and sensing}}\\
@@ -18,6 +18,7 @@ E8 & softer pads & contact time constant 6\,ms (reference 3\,ms) & no\\
 E9 & earlier kinetic switch & switch at 5\,mm/s (reference 2\,cm/s) & no\\
 E7L, E9L & diagnostics & E7, E9 with the one-step lag removed from the switch & no\\
 R0L & diagnostic & reference with the lag removed & no\\
+T2L & diagnostic & T2 with the lag removed & (T2 weights)\\
 \multicolumn{4}{@{}l}{\textit{Shield settings}}\\
 S1, S2, S3 & assumed drop & $r_{\max}=1.0$, 1.1, 1.4 (reference 1.2) & no\\
 S4, S5 & slip tolerance & 2\,mm, 10\,mm (reference 5\,mm) & no\\

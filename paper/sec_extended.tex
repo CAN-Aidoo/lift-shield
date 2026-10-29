@@ -2,7 +2,8 @@
 The confirmatory study answers \Q1--\Q4 for one configuration. A reader building on it needs to know which conclusions
 depend on our choices. We therefore ran a controlled study (Fig.~\ref{fig:overview}): starting from the test-set
 configuration, each of 19 rows changes \emph{one} design choice and reruns all six methods on the same 40 objects, four
-values of $r$ and the same episode seeds; four rows retrain the residuals. Figure~\ref{fig:ctrl} reports the change in
+values of $r$ and the same episode seeds; four rows retrain the residuals. Four diagnostic rows (R0L, E7L, E9L, T2L) were
+added after some results were seen, each frozen before it was run. Figure~\ref{fig:ctrl} reports the change in
 failure rate, grip and episode time for every cell, with a paired bootstrap over objects marking changes whose 95\%
 interval excludes zero (an unpaired bootstrap for E1 and E2, which draw different objects). Table~\ref{tab:changes} in the
 appendix describes each change and Table~\ref{tab:controlled} gives absolute values. The study, and the analyses in
@@ -20,7 +21,8 @@ reference configuration and reruns every method on the same objects and episode 
 \caption{\textbf{Controlled study.} Each cell is the change from the reference configuration (top row, absolute values),
 with the resulting absolute value in parentheses; * marks a 95\% bootstrap interval that excludes zero. Red is worse
 (more failures, more grip, longer episodes). Failures count lifts that slip more than the row's tolerance or drop the rod,
-over 160 lifts (B0, B0S) or 800 lifts (learned methods, 5 seeds).}\label{fig:ctrl}
+over 160 lifts (B0, B0S) or 800 lifts (learned methods, 5 seeds). Blocks, top to bottom: environment and sensing (E),
+shield settings (S), training (T), and diagnostics with the emulator's one-step lag removed (rows ending in L).}\label{fig:ctrl}
 \end{figure*}
 
 \subsection{Findings that hold}

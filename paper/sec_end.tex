@@ -40,7 +40,8 @@ threshold; when either fails, it reports the maximum grip and the shield decline
 \finding{Narrow task.} The rod is a rigid box constrained to slide axially, held at its centre of mass by two pads. Rotational
 slip, off-centre grasps, deformable objects and multi-finger hands are outside this study.
 \finding{Policy class and budget.} Policies are linear and were trained for 1{,}560 episodes; all of them saturated the duration
-action. Richer policies or longer training (Section~\ref{sec:extended}) might find different trade-offs.
+action. Training choices matter: twice the budget made the unshielded policy nearly safe on our test set, while training
+without a friction drop made it much less safe (Section~\ref{sec:trainrows}). Richer policies might find other trade-offs.
 \finding{Deviations.} The pre-registered exceedance metric counts elastic creep (D1); the confirmation set was analysed
 pooled (D2); the slip-allowance analysis (D3) and the whole extended study are exploratory. Appendix~\ref{app:protocol} lists
 them.

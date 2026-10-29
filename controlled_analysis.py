@@ -55,7 +55,7 @@ def analyse():
 
 def heat_ax(ax, out, metric, title, fmt="{:+.1f}", afmt="{:.1f}", labels=True, worse_is_up=True):
     rows = [r for r in ROWS if r in out]
-    order = [r for r in rows if r[0] == "E" and not r.endswith("L")] + [r for r in rows if r[0] == "S"] + [r for r in rows if r[0] == "T"] + [r for r in rows if r.endswith("L")]
+    order = [r for r in rows if r[0] == "E" and not r.endswith("L")] + [r for r in rows if r[0] == "S"] + [r for r in rows if r[0] == "T" and not r.endswith("L")] + [r for r in rows if r.endswith("L")]
     D = np.array([[out[r][m]["d_" + metric] for m in METH] for r in order])
     lim = max(1e-9, np.nanmax(np.abs(D)))
     Z = np.vstack([np.zeros(len(METH)), np.sign(D) * np.sqrt(np.abs(D) / lim)])
@@ -69,13 +69,14 @@ def heat_ax(ax, out, metric, title, fmt="{:+.1f}", afmt="{:.1f}", labels=True, w
             o = out[r][m]; star = "*" if o["sig_" + metric] else ""; z = abs(Z[i, j])
             col = "white" if z > 0.75 else "black"
             dv = o["d_" + metric]
-            txt = "0" if abs(dv) < 1e-9 else ((("{:+.2f}" if abs(dv) < 0.5 and "0f" in fmt else fmt).format(dv)) + star)
+            f2 = "{:+.2f}" if (abs(dv) < 0.5 and "0f" in fmt) else ("{:+.3f}" if (abs(dv) < 0.005 and ".2f" in fmt) else fmt)
+            txt = "0" if abs(dv) < 1e-9 else f2.format(dv) + star
             ax.text(j, i - 0.14, txt, ha="center", va="center", fontsize=5.5, fontweight="bold" if star else "normal", color=col)
             ax.text(j, i + 0.26, "(" + afmt.format(o[metric]) + ")", ha="center", va="center", fontsize=4.2, color="0.85" if z > 0.75 else "0.35")
     ax.set_yticks(range(len(order) + 1))
     ax.set_yticklabels(["Reference"] + [f"{r}  {ROWS[r][0]}" for r in order] if labels else [], fontsize=5.6)
     ax.set_xticks(range(len(METH))); ax.set_xticklabels(METH, fontsize=6.2); ax.xaxis.tick_top()
-    nE = sum(r[0] == "E" and not r.endswith("L") for r in order); nS = sum(r[0] == "S" for r in order); nT = sum(r[0] == "T" for r in order)
+    nE = sum(r[0] == "E" and not r.endswith("L") for r in order); nS = sum(r[0] == "S" for r in order); nT = sum(r[0] == "T" and not r.endswith("L") for r in order)
     for y in (0.5, nE + 0.5, nE + nS + 0.5, nE + nS + nT + 0.5):
         ax.axhline(y, color="white", lw=2.2)
     ax.set_title(title, fontsize=7, pad=13)
