@@ -1,3 +1,5 @@
+![Is a Little Slip Worth It? A learned lifting policy is 2.7x faster than a friction model; without a shield 16% of its lifts slip more than 5 mm at friction ratio 1.2, with the shield none do.](assets/banner.png)
+
 # lift-shield
 
 **Is a Little Slip Worth It? Certified Fast Lifting for Learned Grasp Policies Under a Static-to-Kinetic Friction Drop**
